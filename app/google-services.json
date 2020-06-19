@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "874327328957",
+    "firebase_url": "https://games-igdb.firebaseio.com",
+    "project_id": "games-igdb",
+    "storage_bucket": "games-igdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874327328957:android:dc3e838713013b2cb24fd4",
+        "android_client_info": {
+          "package_name": "com.example.myapplicationstyle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874327328957-g645e51oe01jtsk77c5eqjdm2vt8mi7m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEQVzlirTSsiyJCTdloSipooo4ZxpIZJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874327328957-g645e51oe01jtsk77c5eqjdm2vt8mi7m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">My Application style</string>
+    <string name="search_hint">Search video game by name</string>
+
+    <!--Menu strings-->
+    <string name="settings">Settings</string>
+    <string name="pref_platform_ps4_value">PS4</string>
+    <string name="pref_platform_key">platform</string>
+    <string name="pref_platform_value">Games of platform</string>
+    <string name="pref_platform_desc_value">desc</string>
+    <string name="pref_gamesOrder_desc_value">desc</string>
+    <string name="pref_news_all">all</string>
+    <string name="pref_news_category">news_category</string>
+    <string name="pref_news_value">News category</string>
+    <string name="order_desc">order_desc</string>
+    <string name="pref_order_desc">desc</string>
+    <string name="pref_order_asc">asc</string>
+    <string name="pref_order_label">Games Order</string>
+
+
+</resources>
