@@ -1,0 +1,36 @@
+<?xml version ="1.0" encoding ="utf-8"?><!--  Learn More about how to use App Actions: https://developer.android.com/guide/actions/index.html -->
+<PreferenceScreen
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <ListPreference
+        android:defaultValue="@string/pref_platform_ps4_value"
+        android:entries="@array/pref_platform_option_labels"
+        android:entryValues="@array/pref_platform_option_values"
+        android:key="@string/pref_platform_key"
+        android:title="@string/pref_platform_value"
+
+        />
+
+    <ListPreference
+        android:defaultValue="@string/pref_news_all"
+        android:entries="@array/pref_news_labels"
+        android:entryValues="@array/pref_news_values"
+        android:key="@string/pref_news_category"
+        android:title="@string/pref_news_value"
+
+        />
+
+    <CheckBoxPreference
+        android:defaultValue="@bool/pref_game_order"
+        android:key="@string/order_desc"
+        android:summaryOff="@string/pref_order_desc"
+        android:summaryOn="@string/pref_order_asc"
+        android:title="@string/pref_order_label"
+
+
+        />
+
+</PreferenceScreen>

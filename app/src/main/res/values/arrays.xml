@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_platform_option_labels">
+        <item>@string/pref_platform_label_ps4</item>
+        <item>@string/pref_platform_label_xboxOne</item>
+        <item>@string/pref_platform_label_pc</item>
+        <item>@string/pref_platform_label_switch</item>
+        <item>@string/pref_platform_label_mac</item>
+        <item>@string/pref_platform_label_3ds</item>
+        <item>@string/pref_platform_label_all</item>
+    </array>
+    <array name="pref_platform_option_values">
+        <item>@string/pref_platform_ps4_value</item>
+        <item>@string/pref_platform_xboxOne_value</item>
+        <item>@string/pref_platform_pc_value</item>
+        <item>@string/pref_platform_switch_value</item>
+        <item>@string/pref_platform_mac_value</item>
+        <item>@string/pref_platform_3ds_value</item>
+        <item>@string/pref_platform_all</item>
+    </array>
+
+
+    <array name="pref_news_labels" >
+        <item>@string/pref_news_label_pulse</item>
+        <item>@string/pref_news_label_coming</item>
+        <item>@string/pref_news_label_newTrailer</item>
+        <item>@string/pref_news_label_uContributions_item</item>
+        <item>@string/pref_news_label_uContribution_item</item>
+        <item>@string/pref_news_label_pContribution_item</item>
+        <item>@string/pref_news_label_all</item>
+    </array>
+
+    <array name="pref_news_values" >
+        <item>@string/pref_news_label_value</item>
+        <item>@string/pref_news_coming_value</item>
+        <item>@string/pref_news_newTrailer_value</item>
+        <item>@string/pref_news_uContributions_value</item>
+        <item>@string/pref_news_uContribution_value</item>
+        <item>@string/pref_news_pContribution_value</item>
+        <item>@string/pref_news_all_value</item>
+
+    </array>
+
+
+
+    <string name="pref_platform_label_ps4">PS4</string>
+    <string name="pref_platform_label_xboxOne">XboxOne</string>
+    <string name="pref_platform_label_pc">PC</string>
+    <string name="pref_platform_label_switch">Nintendo Swith</string>
+    <string name="pref_platform_label_mac">Mac</string>
+    <string name="pref_platform_label_3ds">Nintendo 3DS</string>
+    <string name="pref_platform_label_all">All</string>
+    <string name="pref_platform_xboxOne_value">Xbox One</string>
+    <string name="pref_platform_pc_value">PC</string>
+    <string name="pref_platform_switch_value">Nintendo Switch</string>
+    <string name="pref_platform_mac_value">Mac</string>
+    <string name="pref_platform_3ds_value">Nintendo 3DS</string>
+    <string name="pref_platform_all">All</string>
+    <string name="pref_news_label_pulse">pulse article</string>
+    <string name="pref_news_label_coming">coming soon</string>
+    <string name="pref_news_label_newTrailer">new trailer</string>
+    <string name="pref_news_label_uContributions_item">user contributions item</string>
+    <string name="pref_news_label_uContribution_item">user contribution item</string>
+    <string name="pref_news_label_all">All</string>
+    <string name="pref_news_label_value">pulse</string>
+    <string name="pref_news_coming_value">coming</string>
+    <string name="pref_news_newTrailer_value">newTrailer</string>
+    <string name="pref_news_uContributions_value">uContributions</string>
+    <string name="pref_news_uContribution_value">uContribution</string>
+    <string name="pref_news_label_pContribution_item">page contribution item</string>
+    <string name="pref_news_pContribution_value">pContribution</string>
+    <string name="pref_news_all_value">all</string>
+</resources>
