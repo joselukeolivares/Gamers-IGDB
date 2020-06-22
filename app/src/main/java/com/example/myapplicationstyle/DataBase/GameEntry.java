@@ -20,6 +20,25 @@ public class GameEntry {
     private String summary;
     private int hypes;
     private int first_release_date;
+    private boolean favorite=false;
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getJsonObj() {
+        return jsonObj;
+    }
+
+    public void setJsonObj(String jsonObj) {
+        this.jsonObj = jsonObj;
+    }
+
+    private String jsonObj;
 
     public String getInvolved_companies() {
         return involved_companies;

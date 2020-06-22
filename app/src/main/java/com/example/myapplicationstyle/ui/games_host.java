@@ -34,7 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class games_host  extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class games_host  extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener,Games_fragment.games_fragment_ItemSelected{
 
 
     private Toolbar mToolbar;
@@ -351,5 +351,10 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
             auto_refresh=false;
             getData();
         }
+    }
+
+    @Override
+    public void gameSelected(GameEntry game) {
+        Log.i(this.getClass().getName(),game.getName());
     }
 }

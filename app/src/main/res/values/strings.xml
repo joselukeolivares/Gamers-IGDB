@@ -32,6 +32,11 @@
 
     //search
     <string name="search_query"></string>
+    <string name="videos_label"><![CDATA[Videos & Teasers]]></string>
+    <string name="screenshot_label">Screenshots</string>
+    <string name="reviews_label">Reviews</string>
+    <string name="genre_label">Genres:</string>
+    <string name="platform_label">Platforms:</string>
 
 
 </resources>

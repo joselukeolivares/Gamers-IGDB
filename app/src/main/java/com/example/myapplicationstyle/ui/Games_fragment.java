@@ -1,6 +1,9 @@
 package com.example.myapplicationstyle.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +42,9 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
         layoutManager=new GridLayoutManager(inflater.getContext(),2);
         gamesAdapterObj=new gamesAdapter(this);
 
+
         RecyclerView recyclerView=(RecyclerView)rootView.findViewById(R.id.games_recycler_view);
+
         recyclerView.setAdapter(gamesAdapterObj);
         recyclerView.setLayoutManager(layoutManager);
         updateDataAdapter();
@@ -59,5 +64,34 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
     @Override
     public void onClick(GameEntry gameEntry) {
 
+
+        games_fragment_itemSelectedObj.gameSelected(gameEntry);
+        /*
+        Intent intent=new Intent(getContext(),game_detail.class);
+
+        intent.putExtra("game_id",gameEntry.getId_IGDB());
+        intent.putExtra("game_jsonObj",gameEntry.getJsonObj());
+
+        startActivity(intent);
+
+         */
+
+    }
+
+    public interface games_fragment_ItemSelected{
+        public void gameSelected(GameEntry game);
+    }
+
+    games_fragment_ItemSelected games_fragment_itemSelectedObj;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            games_fragment_itemSelectedObj=(games_fragment_ItemSelected) context;
+
+        }catch (ClassCastException e){
+            e.printStackTrace();
+        }
     }
 }

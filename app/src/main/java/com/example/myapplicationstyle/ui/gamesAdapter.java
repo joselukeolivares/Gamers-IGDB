@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class gamesAdapter extends RecyclerView.Adapter<gamesAdapter.VH> {
+public class gamesAdapter extends RecyclerView.Adapter<gamesAdapter.VH>{
 
     ArrayList<GameEntry> gamesList=new ArrayList<>();
     onClickAdapter onClickAdapter;
@@ -72,6 +72,7 @@ public class gamesAdapter extends RecyclerView.Adapter<gamesAdapter.VH> {
             super(itemView);
             poster=itemView.findViewById(R.id.cover_view_holder);
             game_name=itemView.findViewById(R.id.game_name_value);
+            itemView.setOnClickListener(this);
 
         }
 
