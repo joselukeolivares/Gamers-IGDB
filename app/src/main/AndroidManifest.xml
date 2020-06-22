@@ -26,6 +26,7 @@
         <activity android:name=".ui.games_host"/>
         <activity
             android:name=".ui.Activity_settings"
+            android:theme="@style/AppTheme_with_AB"
             android:parentActivityName=".ui.games_host"
 
             >

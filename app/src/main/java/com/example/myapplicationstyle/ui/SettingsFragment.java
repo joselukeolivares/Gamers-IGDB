@@ -56,6 +56,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
         addPreferencesFromResource(R.xml.pref_games);
 
+
+
         SharedPreferences sharedPreferences=getPreferenceScreen().getSharedPreferences();
         PreferenceScreen preferenceScreen=getPreferenceScreen();
         int count=preferenceScreen.getPreferenceCount();

@@ -18,7 +18,7 @@ public class Activity_settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-/*
+
         ActionBar actionBar=this.getSupportActionBar();
 
         if(actionBar!=null){
@@ -26,7 +26,7 @@ public class Activity_settings extends AppCompatActivity {
             actionBar.setTitle(getString(R.string.app_name));
         }
 
- */
+
 
 
     }

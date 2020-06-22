@@ -45,17 +45,21 @@
 
     <string name="pref_platform_label_ps4">PS4</string>
     <string name="pref_platform_label_xboxOne">XboxOne</string>
-    <string name="pref_platform_label_pc">PC</string>
+    <string name="pref_platform_label_pc">PC Windows</string>
     <string name="pref_platform_label_switch">Nintendo Swith</string>
     <string name="pref_platform_label_mac">Mac</string>
     <string name="pref_platform_label_3ds">Nintendo 3DS</string>
     <string name="pref_platform_label_all">All</string>
-    <string name="pref_platform_xboxOne_value">Xbox One</string>
-    <string name="pref_platform_pc_value">PC</string>
-    <string name="pref_platform_switch_value">Nintendo Switch</string>
-    <string name="pref_platform_mac_value">Mac</string>
-    <string name="pref_platform_3ds_value">Nintendo 3DS</string>
-    <string name="pref_platform_all">All</string>
+
+    <string name="pref_platform_ps4_value">48</string>
+    <string name="pref_platform_xboxOne_value">49</string>
+    <string name="pref_platform_pc_value">6</string>
+    <string name="pref_platform_switch_value">130</string>
+    <string name="pref_platform_mac_value">14</string>
+    <string name="pref_platform_3ds_value">37</string>
+    <string name="pref_platform_all">9999</string>
+
+
     <string name="pref_news_label_pulse">pulse article</string>
     <string name="pref_news_label_coming">coming soon</string>
     <string name="pref_news_label_newTrailer">new trailer</string>

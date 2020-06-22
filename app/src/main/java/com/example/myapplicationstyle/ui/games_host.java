@@ -4,14 +4,13 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.audiofx.Visualizer;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SearchEvent;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
@@ -20,12 +19,20 @@ import androidx.appcompat.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
+import com.example.myapplicationstyle.DataBase.GameEntry;
+import com.example.myapplicationstyle.MainActivity;
 import com.example.myapplicationstyle.R;
 import com.example.myapplicationstyle.getJson;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class games_host  extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
 
@@ -33,10 +40,22 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     private Toolbar mToolbar;
     private  ImageView imgBar;
     private String game_poster_url="https://images.igdb.com/igdb/image/upload/t_cover_big/co20uw.jpg";
+    private ArrayList<GameEntry> gamesList=new ArrayList<>();
+    private static boolean auto_refresh=false;
+    private static String platform_request;
+    private static String category_request;
+    private static boolean desc=false;
+    private static String search_request="";
+
+
+
+    private FragmentManager fragmentManager=getSupportFragmentManager();
+    Games_fragment games_igdb=new Games_fragment();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(this.getClass().getName(),"onCreate");
         setContentView(R.layout.games_host);
 
         imgBar=(ImageView)findViewById(R.id.img_bar);
@@ -46,32 +65,234 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
 
 
+
         mToolbar=findViewById(R.id.main_toolbar);
         setSupportActionBar(mToolbar);
-       // mToolbar.setDisplayHomeAsUpEnabled(true);
+        //mToolbar.setDisplayHomeAsUpEnabled(true);
         //mToolbar.setTitle(getString(R.string.app_name));
         setupSharedPreferences();
 
+        Intent intent=getIntent();
+        if(intent!=null){
+            Log.i(this.getClass().getName(),"from intent");
+            if(intent.getStringExtra("search_query")!=null){
+                search_request=intent.getStringExtra("search_query");
+                Log.i(this.getClass().getName(),"Changing search");
+            }
+        }
+
+        getData();
+
+
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+
+    }
+
+    public void getData(){
+            gamesList.clear();
+             getJson.getData(this,platform_request,category_request,desc,search_request, new MainActivity.VolleyCallBack() {
+
+
+            @Override
+            public void succesVolley(JSONArray response) {
+                //Log.i(this.getClass().getName(), response.toString());
+
+                data_to_Json(response.toString());
+                setupGames(1);
+            }
+        });
+
+
+    }
+
+    public void data_to_Json(String data){
+
+        if(data!=null){
+            try{
+                JSONArray games=new JSONArray(data);
+
+                for(int i=0;i<games.length();i++){
+
+                    JSONObject gameJsonObj=games.getJSONObject(i);
+                    GameEntry gameEntry=new GameEntry();
+
+                    String id =gameJsonObj.optString("id");
+                    gameEntry.setId_IGDB(Integer.parseInt(id));
+
+                    //name
+                    String name=gameJsonObj.optString("name");
+
+                    //Cover
+                    String cover=null;
+                    if(gameJsonObj.optJSONObject("cover")!=null){
+                        cover=gameJsonObj.optJSONObject("cover").optString("image_id");
+                    }
+
+                    //Log.i(this.getClass().getName(),"game: "+cover);
+
+                    //hypes
+                    String hypes=gameJsonObj.optString("hypes");
+
+                    //platforms
+                    JSONArray platformsList=gameJsonObj.optJSONArray("platforms");
+                    String platforms="";
+                    if(platformsList!=null){
+                        for(int j=0;j<platformsList.length();j++){
+                            JSONObject platformsJsonObj=platformsList.getJSONObject(j);
+
+                            String platform=platformsJsonObj.getString("name");
+                            platforms+=platform+". ";
+                        }
+                    }
+
+
+                    //rating
+                    String rating=gameJsonObj.optString("rating");
+
+                    //total rating
+                    String total_rating=gameJsonObj.optString("total_rating");
+
+
+                    //total rating count
+                    String total_rating_count=gameJsonObj.optString("total_rating_count");
+
+                    //summary
+                    String summary=gameJsonObj.optString("summary");
+
+
+                    //Genres
+                    JSONArray genresList=gameJsonObj.optJSONArray("genres");
+                    String genres="";
+                    if(genresList!=null){
+                        for(int j=0;j<genresList.length();j++){
+                            JSONObject genreJsonObj=genresList.getJSONObject(j);
+
+                            String company=genreJsonObj.optString("name");
+                            genres+=company+". ";
+                        }
+                        //Log.i(this.getClass().getName(),"game: "+genres);
+
+                    }
+
+
+                    //Companies involved
+                    JSONArray companiesList=gameJsonObj.optJSONArray("involved_companies");
+                    String companies="";
+                    if(companiesList!=null){
+                        for(int j=0;j<companiesList.length();j++){
+                            JSONObject genreJsonObj=companiesList.getJSONObject(j).getJSONObject("company");
+
+                            String company=genreJsonObj.optString("name");
+                            companies+=company+". ";
+                        }
+                        //Log.i(this.getClass().getName(),"game: "+companies);
+
+                    }
+
+                    //Screenshots
+                    JSONArray screenshotList=gameJsonObj.optJSONArray("screenshots");
+                    String screenList_String=screenshotList!=null&&screenshotList.length()>0?screenshotList.toString():"";
+
+
+                    //videos
+                    JSONArray videosList=gameJsonObj.optJSONArray("videos");
+                    String videosList_String=videosList!=null&&videosList.length()>0?videosList.toString():"";
+                    //Log.i(this.getClass().getName(),"game: "+gameJsonObj.optJSONArray("screenshots").toString());
+
+                    gameEntry.setId_IGDB(Integer.parseInt(id));
+                    gameEntry.setName(name);
+                    gameEntry.setHypes(Integer.parseInt(!hypes.isEmpty()?hypes:"0"));
+                    gameEntry.setPlatforms(platforms);
+                    gameEntry.setRating(Double.parseDouble(!rating.isEmpty()?rating:"0.0"));
+                    gameEntry.setTotal_rating(Double.parseDouble(!total_rating.isEmpty()?total_rating:"0"));
+                    gameEntry.setTotal_rating_count(Integer.parseInt(!total_rating_count.isEmpty()?total_rating_count:"0"));
+                    gameEntry.setSummary(summary);
+                    gameEntry.setGenres(genres);
+                    gameEntry.setInvolved_companies(companies);
+                    gameEntry.setScreenshot_url(screenList_String);
+                    gameEntry.setVideos_id(videosList_String);
+                    gameEntry.setCoverUrl(cover);
+
+                    //Log.i(this.getClass().getName(),"game cover_id: "+gameEntry.getCoverUrl());
+
+                    gamesList.add(gameEntry);
+
+
+
+                }
+
+
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+
+        }
+
+    }
+
+    public void setupGames(int option){
+
+        if(option==1){
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.games_fragment,games_igdb)
+                    .commit();
+            Log.i(this.getClass().getName(),"Game list: "+gamesList.size());
+            games_igdb.setGamesData(gamesList);
+        }
 
     }
 
     public void setupSharedPreferences(){
         SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 
+        platform_request=sharedPreferences.getString(getString(R.string.pref_platform_key),getString(R.string.pref_platform_label_ps4));
+        category_request=sharedPreferences.getString(getString(R.string.pref_news_category),getString(R.string.pref_news_label_all));
+        desc            =sharedPreferences.getBoolean(getString(R.string.order_desc),false);
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
+        if(key.equals(getString(R.string.pref_platform_key))){
+            String platform=sharedPreferences.getString(key,getResources().getString(R.string.pref_platform_all));
+
+        }else if(key.equals(getString(R.string.pref_news_category))){
+            String category=sharedPreferences.getString(key,getResources().getString(R.string.pref_news_all));
+
+        }else if(key.equals(getString(R.string.order_desc))){
+            boolean order_desc=sharedPreferences.getBoolean(key,getResources().getBoolean(R.bool.pref_game_order));
+
+            if(order_desc){
+                //Log.i(this.getClass().getName(),"desc: True");
+            }else{
+                //Log.i(this.getClass().getName(),"desc: false");
+            }
+
+            auto_refresh=true;
+        }
+
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu( Menu menu) {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.games_menu,menu);
 
+
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(true); // Do not iconify the widget; expand it by default
@@ -80,8 +301,18 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Toast toast=Toast.makeText(getApplicationContext(),query,Toast.LENGTH_LONG);
+                search_request=query;
+
+                search_request="";
                 toast.show();
-                return false;
+                searchView.clearFocus();
+                searchView.setQuery("", false);
+                searchView.setIconified(true);
+                searchView.onActionViewCollapsed();
+                performUpdate(query);
+
+
+                return true;
             }
 
             @Override
@@ -92,6 +323,12 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
 
         return true;
+    }
+
+    public void performUpdate(String query){
+        Intent intent=new Intent(this,games_host.class);
+        intent.putExtra("search_query",query);
+        startActivity(intent);
     }
 
     @Override
@@ -105,5 +342,14 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(this.getClass().getName(),"onResume");
+        if(auto_refresh){
+            Log.i(this.getClass().getName(),"Auto refresh working");
+            auto_refresh=false;
+            getData();
+        }
+    }
 }

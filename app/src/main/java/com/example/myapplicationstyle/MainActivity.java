@@ -29,18 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createSignInIntent();
-        /*
-        getJson.getData(this, new VolleyCallBack() {
 
-
-            @Override
-            public void succesVolley(JSONArray response) {
-                Log.i(this.getClass().getName(), response.toString());
-
-            }
-        });
-
-         */
 
 
     }

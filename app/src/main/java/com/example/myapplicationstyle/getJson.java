@@ -1,6 +1,7 @@
 package com.example.myapplicationstyle;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -26,15 +27,16 @@ import java.util.Map;
 
 public class getJson extends View{
 
-
+    String body_request;
     public getJson(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public static void getData(Context context, final MainActivity.VolleyCallBack successMethod){
+    public static void getData(Context context, final String platform, String category, final boolean desc, final String search_request, final MainActivity.VolleyCallBack successMethod){
         ///Log.i(this.getClass().getName(),"requesting");
         //String url = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
         String url ="https://api-v3.igdb.com/games";
+
         RequestQueue mRequestQueue= Volley.newRequestQueue(context);
 
         JSONObject jsonObject = new JSONObject();
@@ -92,18 +94,26 @@ public class getJson extends View{
 
             @Override
             public byte[] getBody()  {
-                String httpPostBody="sort popularity desc;where id=69351;";
-                // usually you'd have a field with some values you'd want to escape, you need to do it yourself if overriding getBody. here's how you do it
-                /*
-                try {
-                    httpPostBody=httpPostBody+ URLEncoder.encode("{{%stuffToBe Escaped/","UTF-8");
-                } catch (UnsupportedEncodingException exception) {
-                    Log.e("ERROR", "exception", exception);
-                    // return null and don't pass any POST string if you encounter encoding error
-                    return null;
+                String httpPostBody="fields name,genres.name,cover.image_id,platforms.name,involved_companies.company.name,rating,total_rating,rating_count,total_rating_count,summary,hypes,videos.*,screenshots.image_id;";
+                String where_condition="where cover.image_id!=\"\" & cover.image_id!=null ";
+                if(!desc){
+                    httpPostBody=httpPostBody.concat("sort popularity desc;");
+                }else{
+                    httpPostBody=httpPostBody.concat("sort popularity asc;");
                 }
 
-                 */
+
+                if(!search_request.isEmpty()){
+                    where_condition=where_condition.concat(" & name ~ *\""+search_request+"\"*");
+                }
+
+                if(!platform.equals("9999")){
+                    where_condition=where_condition.concat(" & platforms !=n & platforms = {"+platform+"}");
+                }
+                where_condition=where_condition.concat(";");
+                httpPostBody=httpPostBody.concat(where_condition);
+
+                Log.i(this.getClass().getName(),httpPostBody);
                 return httpPostBody.getBytes();
             }
         };
