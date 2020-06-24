@@ -120,6 +120,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
                     JSONObject gameJsonObj=games.getJSONObject(i);
                     GameEntry gameEntry=new GameEntry();
+                    gameEntry.setJsonObj(gameJsonObj.toString());
 
                     String id =gameJsonObj.optString("id");
                     gameEntry.setId_IGDB(Integer.parseInt(id));
@@ -134,7 +135,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
                     }
 
                     //Log.i(this.getClass().getName(),"game: "+cover);
-
+                    /*
                     //hypes
                     String hypes=gameJsonObj.optString("hypes");
 
@@ -203,9 +204,13 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
                     JSONArray videosList=gameJsonObj.optJSONArray("videos");
                     String videosList_String=videosList!=null&&videosList.length()>0?videosList.toString():"";
                     //Log.i(this.getClass().getName(),"game: "+gameJsonObj.optJSONArray("screenshots").toString());
+                    */
+
 
                     gameEntry.setId_IGDB(Integer.parseInt(id));
                     gameEntry.setName(name);
+                    gameEntry.setCoverUrl(cover);
+                    /*
                     gameEntry.setHypes(Integer.parseInt(!hypes.isEmpty()?hypes:"0"));
                     gameEntry.setPlatforms(platforms);
                     gameEntry.setRating(Double.parseDouble(!rating.isEmpty()?rating:"0.0"));
@@ -216,7 +221,9 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
                     gameEntry.setInvolved_companies(companies);
                     gameEntry.setScreenshot_url(screenList_String);
                     gameEntry.setVideos_id(videosList_String);
-                    gameEntry.setCoverUrl(cover);
+
+                     */
+
 
                     //Log.i(this.getClass().getName(),"game cover_id: "+gameEntry.getCoverUrl());
 
@@ -356,5 +363,16 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     @Override
     public void gameSelected(GameEntry game) {
         Log.i(this.getClass().getName(),game.getName());
+
+
+        Intent intent=new Intent(this,game_detail.class);
+
+        intent.putExtra("game_idIGDB",game.getId_IGDB());
+        intent.putExtra("game_jsonObj",game.getJsonObj());
+
+        startActivity(intent);
+
+
+
     }
 }

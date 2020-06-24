@@ -36,6 +36,12 @@
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/search_material"/>
         </activity>
+        <activity android:name=".ui.game_detail"
+            android:parentActivityName=".ui.games_host"
+            android:theme="@style/AppTheme_with_AB"
+            >
+
+        </activity>
     </application>
 
 </manifest>

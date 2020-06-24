@@ -19,7 +19,7 @@ public class GameEntry {
     private String genres;
     private String summary;
     private int hypes;
-    private int first_release_date;
+    private long first_release_date;
     private boolean favorite=false;
 
     public boolean isFavorite() {
@@ -149,11 +149,11 @@ public class GameEntry {
         this.hypes = hypes;
     }
 
-    public int getFirst_release_date() {
+    public long getFirst_release_date() {
         return first_release_date;
     }
 
-    public void setFirst_release_date(int first_release_date) {
+    public void setFirst_release_date(long first_release_date) {
         this.first_release_date = first_release_date;
     }
 

@@ -37,6 +37,11 @@
     <string name="reviews_label">Reviews</string>
     <string name="genre_label">Genres:</string>
     <string name="platform_label">Platforms:</string>
+    <string name="member_count">Member Count</string>
+    <string name="critic_rating">Critic Rating</string>
+    <string name="played">Played</string>
+    <string name="playing">Playing</string>
+    <string name="want">want</string>
 
 
 </resources>

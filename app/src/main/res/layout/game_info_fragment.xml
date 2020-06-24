@@ -13,6 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="25dp"
+        android:scaleType="centerCrop"
         />
 
     <TextView
@@ -20,19 +21,22 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10dp"
         app:layout_constraintTop_toBottomOf="@+id/game_cover" />
 
     <TextView
         android:id="@+id/game_release"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/game_cover"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_name" />
 
     <TextView
         android:id="@+id/game_companies"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_release" />
 
@@ -40,7 +44,8 @@
         android:id="@+id/member_count_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        tools:text="@string/member_count"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_cover" />
 
@@ -48,7 +53,7 @@
         android:id="@+id/member_count_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/member_count_label" />
 
@@ -56,7 +61,8 @@
         android:id="@+id/critic_rating_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        tools:text="@string/critic_rating"
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/member_count_value" />
 
@@ -64,7 +70,7 @@
         android:id="@+id/critic_rating_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/critic_rating_label" />
 
@@ -74,6 +80,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:layout_margin="10dp"
         app:layout_constraintTop_toBottomOf="@+id/critic_rating_value">
 
         <TextView
@@ -97,6 +104,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:layout_margin="10dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat">
 
         <TextView
@@ -116,19 +124,21 @@
         android:id="@+id/game_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_summary">
 
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="wrap_content"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
@@ -141,9 +151,21 @@
                 android:layout_height="50dp" />
 
             <TextView
+                android:id="@+id/want_value"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                />
+
+            <TextView
                 android:id="@+id/want_label"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:text="@string/want"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
+
 
 
         </LinearLayout>
@@ -151,7 +173,7 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="25dp"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
@@ -163,11 +185,20 @@
                 android:background="@drawable/ic_games_24px"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
-
+            <TextView
+                android:id="@+id/playing_value"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"/>
             <TextView
                 android:id="@+id/playing_label"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:text="@string/playing"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                />
 
 
         </LinearLayout>
@@ -175,7 +206,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="25dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -185,12 +216,23 @@
                 android:id="@+id/played_icon"
                 android:background="@drawable/ic_check_circle_24px"
                 android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                />
 
+            <TextView
+                android:id="@+id/played_value"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"/>
             <TextView
                 android:id="@+id/played_label"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:text="@string/played"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                />
 
 
         </LinearLayout>

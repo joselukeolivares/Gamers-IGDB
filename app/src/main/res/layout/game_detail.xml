@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView
@@ -11,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        style="@style/AppTheme_with_AB"
+
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +25,7 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -32,23 +33,42 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
+                android:id="@+id/videos_btn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                tools:text="@string/videos_label" />
+                android:text="@string/videos_label"
+
+                />
 
             <Button
+                android:id="@+id/screenshot_btn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                tools:text="@string/screenshot_label" />
+                android:text="@string/screenshot_label" />
 
             <Button
+                android:id="@+id/reviews_btn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                tools:text="@string/reviews_label" />
+                android:text="@string/reviews_label" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:itemBackground="@color/colorPrimary"
+            app:itemIconTint="@android:color/black"
+            app:itemTextColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottom_navigation_menu" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

@@ -28,7 +28,7 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
 
 
 
-    Games_fragment(){
+    public Games_fragment(){
 
     }
 
@@ -66,15 +66,6 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
 
 
         games_fragment_itemSelectedObj.gameSelected(gameEntry);
-        /*
-        Intent intent=new Intent(getContext(),game_detail.class);
-
-        intent.putExtra("game_id",gameEntry.getId_IGDB());
-        intent.putExtra("game_jsonObj",gameEntry.getJsonObj());
-
-        startActivity(intent);
-
-         */
 
     }
 

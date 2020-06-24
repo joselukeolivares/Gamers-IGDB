@@ -94,7 +94,7 @@ public class getJson extends View{
 
             @Override
             public byte[] getBody()  {
-                String httpPostBody="fields name,genres.name,cover.image_id,platforms.name,involved_companies.company.name,rating,total_rating,rating_count,total_rating_count,summary,hypes,videos.*,screenshots.image_id;";
+                String httpPostBody="fields name,genres.name,cover.image_id,platforms.name,involved_companies.company.name,rating,total_rating,rating_count,total_rating_count,summary,hypes,videos.*,screenshots.image_id,first_release_date;";
                 String where_condition="where cover.image_id!=\"\" & cover.image_id!=null ";
                 if(!desc){
                     httpPostBody=httpPostBody.concat("sort popularity desc;");
