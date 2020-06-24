@@ -3,6 +3,7 @@ package com.example.myapplicationstyle.ui;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,9 +84,10 @@ public class Game_summary_fragment extends Fragment {
         String name=game.getName();
         game_name.setText(name!=null?name:"");
 
-        long milliseconds=game.getFirst_release_date();
 
-        String date=getDate(milliseconds);
+        long milliseconds=game.getFirst_release_date();
+        Log.i(this.getClass().getName(),milliseconds+"");
+        String date=getDate(milliseconds *1000);
         release.setText(date);
 
         String companie=game.getInvolved_companies();
