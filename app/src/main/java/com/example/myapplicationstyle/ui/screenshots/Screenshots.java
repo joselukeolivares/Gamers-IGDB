@@ -2,6 +2,8 @@ package com.example.myapplicationstyle.ui.screenshots;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -29,6 +31,7 @@ public class Screenshots extends AppCompatActivity {
     private int game_idIGDB;
     private String game_name;
     private String game_cover;
+    private JSONObject game_jsonObj;
     private String screenshotJsonArray;
 
     @Override
@@ -49,6 +52,7 @@ public class Screenshots extends AppCompatActivity {
             game_idIGDB=savedInstanceState.getInt("game_idIGDB",0);
             game_cover=savedInstanceState.getString("game_cover");
             game_name=savedInstanceState.getString("name");
+
             screenshotJsonArray=savedInstanceState.getString("screeshotJsonArray");
 
         }else if(intent!=null){
@@ -58,7 +62,15 @@ public class Screenshots extends AppCompatActivity {
                 game_idIGDB=intent.getIntExtra("game_idIGDB",0);
                 game_cover=intent.getStringExtra("game_cover");
                 game_name=intent.getStringExtra("name");
-                screenshotJsonArray=intent.getStringExtra("screeshotJsonArray");
+                String game_string=intent.getStringExtra("gameJsonObj");
+                try {
+                    game_jsonObj=new JSONObject(game_string);
+                    Log.i(this.getClass().getName(),game_string);
+                    screenshotJsonArray=game_jsonObj.getJSONArray("screenshots").toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
             }
 
@@ -66,11 +78,13 @@ public class Screenshots extends AppCompatActivity {
 
                 admin_screenshot_fragment();
             }else{
-
+                Log.i(this.getClass().getName(),"screenshotJsonArray is null");
             }
 
 
-        }
+        }else {
+
+        }Log.i(this.getClass().getName(),"Intent is null");
 
 
     }

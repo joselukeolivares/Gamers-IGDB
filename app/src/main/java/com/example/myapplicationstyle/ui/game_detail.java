@@ -16,6 +16,7 @@ import com.example.myapplicationstyle.DataBase.GameEntry;
 import com.example.myapplicationstyle.R;
 import com.example.myapplicationstyle.ui.screenshots.Screenshot_fragment;
 import com.example.myapplicationstyle.ui.screenshots.Screenshots;
+import com.example.myapplicationstyle.ui.videos.Videos_fragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,6 +85,14 @@ public class game_detail extends AppCompatActivity {
             }
         });
 
+        videos_Btn=(Button)findViewById(R.id.videos_btn);
+        videos_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update_content(2);
+            }
+        });
+
     }
 
     @Override
@@ -100,16 +109,35 @@ public class game_detail extends AppCompatActivity {
 
     public void update_content(int content_type){
 
-        if(content_type==1){
+        if(content_type==1){//Intent for Screenshots
             if(!on_tablet){
                 Intent intent=new Intent(this, Screenshots.class);
-                intent.putExtra("game_idIGDB",gameEntry.getId_IGDB());
-                intent.putExtra("game_cover",gameEntry.getCoverUrl());
-                intent.putExtra("name", gameEntry.getName());
-                intent.putExtra("screeshotJsonArray",gameEntry.getScreenshot_url());
+                putExtras_intent(intent);
+                startActivity(intent);
+
+            }else{//admin fragment in this class instead of Screenshots.class
+
+            }
+        }else if(content_type==2){//Intent for videos
+            if(!on_tablet){
+
+            }else{
+                Intent intent=new Intent(this, Videos_fragment.class);
+                putExtras_intent(intent);
                 startActivity(intent);
             }
+
         }
+
+    }
+
+    public Intent putExtras_intent(Intent intent){
+        intent.putExtra("game_idIGDB",gameEntry.getId_IGDB());
+        intent.putExtra("game_cover",gameEntry.getCoverUrl());
+        intent.putExtra("name", gameEntry.getName());
+        intent.putExtra("gameJsonObj",gameEntry.getJsonObj());
+        return intent;
+
     }
 
     @Override
