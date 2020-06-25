@@ -128,7 +128,7 @@ public class Game_summary_fragment extends Fragment {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
-        String myDate = dateFormat.format(new Date(1538129354));
+        String myDate = dateFormat.format(new java.util.Date(milliSeconds));
         return myDate;
     }
 

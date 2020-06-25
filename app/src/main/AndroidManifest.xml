@@ -42,6 +42,15 @@
             >
 
         </activity>
+
+        <activity android:name=".ui.screenshots.Screenshots"
+            android:parentActivityName=".ui.game_detail"
+            android:theme="@style/AppTheme_with_AB"
+            >
+
+        </activity>
+
+
     </application>
 
 </manifest>

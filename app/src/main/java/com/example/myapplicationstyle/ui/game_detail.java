@@ -10,11 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.myapplicationstyle.DataBase.GameEntry;
 import com.example.myapplicationstyle.R;
+import com.example.myapplicationstyle.ui.screenshots.Screenshot_fragment;
+import com.example.myapplicationstyle.ui.screenshots.Screenshots;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,7 +65,14 @@ public class game_detail extends AppCompatActivity {
 
             }else{
                 Log.i(this.getClass().getName(),"Game ID not valid");
+                if(gameJsonObj!=null){
+                    setGameEntry(gameJsonObj.toString());
+                }else{
+                    Log.i(this.getClass().getName(),"gameJsonObj is null");
+                }
             }
+        }else{
+            Log.i(this.getClass().getName(),"intent is null");
         }
 
         screenshots_Btn=(Button)findViewById(R.id.screenshot_btn);
@@ -78,15 +86,27 @@ public class game_detail extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(this.getClass().getName(),"onResume");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(this.getClass().getName(),"onRestart");
+    }
+
     public void update_content(int content_type){
 
         if(content_type==1){
             if(!on_tablet){
-                Intent intent=new Intent(this,Screenshot_fragment.class);
+                Intent intent=new Intent(this, Screenshots.class);
                 intent.putExtra("game_idIGDB",gameEntry.getId_IGDB());
                 intent.putExtra("game_cover",gameEntry.getCoverUrl());
                 intent.putExtra("name", gameEntry.getName());
-                intent.putExtra("screeshotJsonArray",gameEntry.getVideos_id());
+                intent.putExtra("screeshotJsonArray",gameEntry.getScreenshot_url());
                 startActivity(intent);
             }
         }
@@ -197,7 +217,7 @@ public class game_detail extends AppCompatActivity {
 
                 //Screenshots
                 JSONArray screenshotList = gameJsonObj.optJSONArray("screenshots");
-                String screenList_String = screenshotList != null && screenshotList.length() > 0 ? screenshotList.toString() : "";
+                //String screenList_String = screenshotList != null && screenshotList.length() > 0 ? screenshotList.toString() : "";
 
 
                 //videos
@@ -219,7 +239,7 @@ public class game_detail extends AppCompatActivity {
                 gameEntry.setSummary(summary);
                 gameEntry.setGenres(genres);
                 gameEntry.setInvolved_companies(companies);
-                gameEntry.setScreenshot_url(screenList_String);
+                gameEntry.setScreenshot_url(screenshotList.toString());
                 gameEntry.setVideos_id(videosList_String);
                 gameEntry.setCoverUrl(cover);
                 gameEntry.setFirst_release_date(first_release_date);
@@ -234,6 +254,12 @@ public class game_detail extends AppCompatActivity {
         }else{
             Log.i(this.getClass().getName(),"Game comes empty");
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
     }
 
 

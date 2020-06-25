@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/game_cover"
+        android:id="@+id/game_cover_screenshot"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_margin="10dp"
@@ -15,18 +15,19 @@
         app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/game_name_screenshot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="@+id/game_cover"
-        app:layout_constraintTop_toBottomOf="@+id/game_cover" />
+        app:layout_constraintTop_toBottomOf="@+id/game_cover_screenshot" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/screnshot_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/game_name_screenshot" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
