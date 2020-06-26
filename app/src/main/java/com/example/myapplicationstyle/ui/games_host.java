@@ -43,7 +43,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     private ArrayList<GameEntry> gamesList=new ArrayList<>();
     private static boolean auto_refresh=false;
     private static String platform_request;
-    private static String category_request;
+    public static String category_request;
     private static boolean desc=false;
     private static String search_request="";
 
@@ -362,7 +362,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
     @Override
     public void gameSelected(GameEntry game) {
-        Log.i(this.getClass().getName(),game.getName());
+        Log.i(this.getClass().getName(),game.getName()+"_"+game.getId_IGDB());
 
 
         Intent intent=new Intent(this,game_detail.class);

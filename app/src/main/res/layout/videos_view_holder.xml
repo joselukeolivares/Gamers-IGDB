@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/youtube_icon_view_holder"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/ic_youtube_dark_icon"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/video_type_view_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/video_label_view_holder"
+        app:layout_constraintBottom_toBottomOf="@+id/youtube_icon_view_holder"
+        app:layout_constraintStart_toEndOf="@+id/youtube_icon_view_holder"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/video_name_view_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/video_label_view_holder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/video_type_view_holder"
+        app:layout_constraintTop_toBottomOf="@+id/video_type_view_holder">
+
+    </TextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

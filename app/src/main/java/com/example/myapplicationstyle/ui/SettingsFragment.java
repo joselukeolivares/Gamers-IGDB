@@ -25,6 +25,8 @@ public class SettingsFragment extends PreferenceFragmentCompat
         super.onCreate(savedInstanceState);
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
+
+
     }
 
     @Override

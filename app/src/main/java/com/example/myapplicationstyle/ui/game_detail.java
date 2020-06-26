@@ -14,8 +14,10 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.myapplicationstyle.DataBase.GameEntry;
 import com.example.myapplicationstyle.R;
+import com.example.myapplicationstyle.ui.reviews.Review;
 import com.example.myapplicationstyle.ui.screenshots.Screenshot_fragment;
 import com.example.myapplicationstyle.ui.screenshots.Screenshots;
+import com.example.myapplicationstyle.ui.videos.Videos;
 import com.example.myapplicationstyle.ui.videos.Videos_fragment;
 
 import org.json.JSONArray;
@@ -93,6 +95,14 @@ public class game_detail extends AppCompatActivity {
             }
         });
 
+        reviews_Btn=(Button)findViewById(R.id.reviews_btn);
+        reviews_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update_content(3);
+            }
+        });
+
     }
 
     @Override
@@ -120,11 +130,21 @@ public class game_detail extends AppCompatActivity {
             }
         }else if(content_type==2){//Intent for videos
             if(!on_tablet){
-
-            }else{
-                Intent intent=new Intent(this, Videos_fragment.class);
+                Intent intent=new Intent(this, Videos.class);
                 putExtras_intent(intent);
                 startActivity(intent);
+            }else{
+
+            }
+
+        }else if(content_type==3){
+
+            if(!on_tablet){
+                Intent intent=new Intent(this, Review.class);
+                putExtras_intent(intent);
+                startActivity(intent);
+            }else{
+
             }
 
         }

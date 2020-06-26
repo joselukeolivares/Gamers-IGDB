@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -32,6 +33,19 @@ public class Videos extends AppCompatActivity {
 
         Intent intent=getIntent();
         if(savedInstanceState!=null){
+            game_idIGDB=savedInstanceState.getInt("game_idIGDB");
+            game_cover=savedInstanceState.getString("game_cover");
+            game_name=savedInstanceState.getString("name");
+            String game_string=savedInstanceState.getString("gameJsonObj");
+            try {
+                game_jsonObj=new JSONObject(game_string);
+                Log.i(this.getClass().getName(),game_string);
+                videosJsonArray =game_jsonObj.getJSONArray("videos").toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
 
         }else if(intent!=null){
             if(intent.getIntExtra("game_idIGDB",0)!=0){
@@ -51,13 +65,15 @@ public class Videos extends AppCompatActivity {
 
             }
 
-            if(videosJsonArray !=null && !videosJsonArray.isEmpty()){
 
-                admin_videos_fragment();
-            }else{
-                Log.i(this.getClass().getName(),"screenshotJsonArray is null");
-            }
 
+        }
+
+        if(videosJsonArray !=null && !videosJsonArray.isEmpty()){
+
+            admin_videos_fragment();
+        }else{
+            Log.i(this.getClass().getName(),"screenshotJsonArray is null");
         }
     }
 
@@ -66,8 +82,18 @@ public class Videos extends AppCompatActivity {
                 .replace(R.id.videos_container,videos_fragment)
                 .commit();
 
-        videos_fragment.setData(videosJsonArray);
+        videos_fragment.setData(game_name,game_cover,videosJsonArray);
 
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("game_idIGDB",game_idIGDB);
+        outState.putString("game_cover",game_cover);
+        outState.putString("name",game_name);
+        outState.putString("gameJsonObj",game_jsonObj.toString());
 
     }
 }

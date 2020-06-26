@@ -42,6 +42,12 @@
     <string name="played">Played</string>
     <string name="playing">Playing</string>
     <string name="want">want</string>
+    <string name="video_label_view_holder">Videos Youtube</string>
+    <string name="youtube_uri">vnd.youtube:</string>
+    <string name="rating_value">0%</string>
+    <string name="date_dummy_value">Month Day, Year</string>
+    <string name="critic_dummy_value">User\'s Critic</string>
+    <string name="review_views">" Views"</string>
 
 
 </resources>
