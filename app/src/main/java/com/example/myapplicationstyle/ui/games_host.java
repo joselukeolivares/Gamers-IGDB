@@ -26,6 +26,8 @@ import com.example.myapplicationstyle.DataBase.GameEntry;
 import com.example.myapplicationstyle.MainActivity;
 import com.example.myapplicationstyle.R;
 import com.example.myapplicationstyle.getJson;
+import com.example.myapplicationstyle.ui.Feeds.Feeds;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -46,6 +48,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     public static String category_request;
     private static boolean desc=false;
     private static String search_request="";
+    BottomNavigationView bottomNavigationView;
 
 
 
@@ -68,8 +71,25 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
         mToolbar=findViewById(R.id.main_toolbar);
         setSupportActionBar(mToolbar);
-        //mToolbar.setDisplayHomeAsUpEnabled(true);
-        //mToolbar.setTitle(getString(R.string.app_name));
+
+        bottomNavigationView=(BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                 case R.id.news_bottom_option:
+                    Goto_Feeds();
+                    return true;
+                    case R.id.games_bottom_option:
+                        Goto_Games(false);
+                        return true;
+                    case R.id.favorites_bottom_option:
+                        Goto_Games(true);
+                        return true;
+                }
+                return true;
+            }
+        });
         setupSharedPreferences();
 
         Intent intent=getIntent();
@@ -84,6 +104,23 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         getData();
 
 
+
+    }
+
+    public void Goto_Feeds(){
+        Intent intent=new Intent(this, Feeds.class);
+        startActivity(intent);
+    }
+
+
+    public void Goto_Games(boolean favorites){
+
+        if(favorites){
+            //filterGames_favorites();
+        }else{
+            Toast toast=Toast.makeText(this,getString(R.string.you_areHere_games),Toast.LENGTH_LONG);
+            toast.show();
+        }
 
     }
 
@@ -375,4 +412,6 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
 
     }
+
+
 }

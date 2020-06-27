@@ -61,6 +61,18 @@
 
         </activity>
 
+        <activity android:name=".ui.reviews.Review_detail"
+            android:parentActivityName=".ui.game_detail"
+            android:theme="@style/AppTheme_with_AB">
+
+        </activity>
+
+        <activity android:name=".ui.Feeds.Feeds"
+            android:parentActivityName=".ui.game_detail"
+            android:theme="@style/AppTheme_with_AB">
+
+        </activity>
+
 
 
 

@@ -9,19 +9,27 @@
         android:id="@+id/game_cover"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="25dp"
         android:scaleType="centerCrop"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favorite_floatingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_favorite_black_18dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/game_cover"
+        app:layout_constraintEnd_toEndOf="@+id/game_cover" />
 
     <TextView
         android:id="@+id/game_name"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_cover" />
 
     <TextView
@@ -44,10 +52,10 @@
         android:id="@+id/member_count_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/member_count"
         android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_cover" />
+        app:layout_constraintTop_toBottomOf="@+id/game_cover"
+        tools:text="@string/member_count" />
 
     <TextView
         android:id="@+id/member_count_value"
@@ -61,10 +69,10 @@
         android:id="@+id/critic_rating_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/critic_rating"
         android:layout_marginHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/member_count_value" />
+        app:layout_constraintTop_toBottomOf="@+id/member_count_value"
+        tools:text="@string/critic_rating" />
 
     <TextView
         android:id="@+id/critic_rating_value"
@@ -78,9 +86,9 @@
         android:id="@+id/linearLayoutCompat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_margin="10dp"
         app:layout_constraintTop_toBottomOf="@+id/critic_rating_value">
 
         <TextView
@@ -102,9 +110,9 @@
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_margin="10dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat">
 
         <TextView
@@ -128,10 +136,12 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_margin="10dp"
+        android:gravity="center_horizontal"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_summary">
 
@@ -146,26 +156,24 @@
 
             <ImageView
                 android:id="@+id/want_icon"
-                android:background="@drawable/ic_access_time_24px"
                 android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:background="@drawable/ic_access_time_24px" />
 
             <TextView
                 android:id="@+id/want_value"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
                 android:gravity="center_horizontal"
-                />
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/want_label"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                tools:text="@string/want"
+                android:gravity="center_horizontal"
                 android:textAlignment="center"
-                android:gravity="center_horizontal" />
-
+                tools:text="@string/want" />
 
 
         </LinearLayout>
@@ -174,31 +182,32 @@
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginHorizontal="25dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintStart_toEndOf="@+id/linearLayout3"
             app:layout_constraintTop_toBottomOf="@+id/textView7">
 
             <ImageView
                 android:id="@+id/playing_icon"
-                android:background="@drawable/ic_games_24px"
                 android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:background="@drawable/ic_games_24px" />
+
             <TextView
                 android:id="@+id/playing_value"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:gravity="center_horizontal"/>
+                android:gravity="center_horizontal"
+                android:textAlignment="center" />
+
             <TextView
                 android:id="@+id/playing_label"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                tools:text="@string/playing"
-                android:textAlignment="center"
                 android:gravity="center_horizontal"
-                />
+                android:textAlignment="center"
+                tools:text="@string/playing" />
 
 
         </LinearLayout>
@@ -207,32 +216,31 @@
             android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginHorizontal="25dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7">
 
             <ImageView
                 android:id="@+id/played_icon"
-                android:background="@drawable/ic_check_circle_24px"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                />
+                android:background="@drawable/ic_check_circle_24px" />
 
             <TextView
                 android:id="@+id/played_value"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:gravity="center_horizontal"/>
+                android:gravity="center_horizontal"
+                android:textAlignment="center" />
+
             <TextView
                 android:id="@+id/played_label"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                tools:text="@string/played"
-                android:textAlignment="center"
                 android:gravity="center_horizontal"
-                />
+                android:textAlignment="center"
+                tools:text="@string/played" />
 
 
         </LinearLayout>

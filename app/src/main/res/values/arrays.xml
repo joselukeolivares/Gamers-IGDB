@@ -67,6 +67,7 @@
     <string name="pref_news_label_uContribution_item">user contribution item</string>
     <string name="pref_news_label_all">All</string>
     <string name="pref_news_label_value">pulse</string>
+
     <string name="pref_news_coming_value">coming</string>
     <string name="pref_news_newTrailer_value">newTrailer</string>
     <string name="pref_news_uContributions_value">uContributions</string>

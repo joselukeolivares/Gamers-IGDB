@@ -28,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.myapplicationstyle.DataBase.ReviewEntry;
 import com.example.myapplicationstyle.MainActivity;
 import com.example.myapplicationstyle.R;
 import com.example.myapplicationstyle.getJson;
@@ -41,7 +42,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Review extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener{
+public class Review extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener,Review_fragment.review_seleted_Infragment{
     private int category;
     private int game_idIGDB;
     private String category_request="EMPTY";
@@ -66,6 +67,23 @@ public class Review extends AppCompatActivity implements SharedPreferences.OnSha
 
         }
 
+    }
+
+    @Override
+    public void onClickReviewFragment(ReviewEntry reviewEntry) {
+        Log.i(this.getClass().getName(),reviewEntry.getTitle());
+
+        Intent intent=new Intent(this,Review_detail.class);
+        intent.putExtra("game_idIGDB",game_idIGDB);
+        intent.putExtra("game_cover",game_cover);
+        intent.putExtra("name",game_name);
+        intent.putExtra("review_views",reviewEntry.getViews());
+        intent.putExtra("date",reviewEntry.getCreated_at());
+        intent.putExtra("title",reviewEntry.getTitle());
+        intent.putExtra("summary",reviewEntry.getContent());
+        intent.putExtra("positive_point",reviewEntry.getPositive_points());
+        intent.putExtra("negative_point",reviewEntry.getNegative_points());
+        startActivity(intent);
     }
 
     public interface VolleyCallBack{

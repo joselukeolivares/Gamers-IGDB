@@ -1,5 +1,7 @@
 package com.example.myapplicationstyle.ui.reviews;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -100,7 +102,7 @@ public class Review_fragment extends Fragment implements ReviewAdapter.onClick_R
 
                 int user=review_jsonObj.optInt("user");
 
-                int views=review_jsonObj.optInt("likes");
+                int views=review_jsonObj.optInt("views");
 
                 long created_at=review_jsonObj.optLong("created_at");
 
@@ -148,5 +150,23 @@ public class Review_fragment extends Fragment implements ReviewAdapter.onClick_R
     @Override
     public void onClick_Review(ReviewEntry review) {
 
+        review_seleted_infragmentObj.onClickReviewFragment(review);
+
+    }
+
+    public interface review_seleted_Infragment{
+        void onClickReviewFragment(ReviewEntry reviewEntry);
+    }
+
+    review_seleted_Infragment review_seleted_infragmentObj;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            review_seleted_infragmentObj=(review_seleted_Infragment)context;
+        }catch (ClassCastException e){
+            e.printStackTrace();
+        }
     }
 }

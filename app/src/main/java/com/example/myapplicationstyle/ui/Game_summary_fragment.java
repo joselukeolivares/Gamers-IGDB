@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplicationstyle.DataBase.GameEntry;
 import com.example.myapplicationstyle.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -48,7 +49,7 @@ public class Game_summary_fragment extends Fragment {
 
     public Game_summary_fragment() {
     }
-
+    FloatingActionButton favorite_floatingButton;
 
     @Nullable
     @Override
@@ -67,6 +68,15 @@ public class Game_summary_fragment extends Fragment {
         playing=(TextView)rootView.findViewById(R.id.playing_value);
         played=(TextView)rootView.findViewById(R.id.played_value);
         summary=(TextView) rootView.findViewById(R.id.game_summary);
+
+        favorite_floatingButton=(FloatingActionButton)rootView.findViewById(R.id.favorite_floatingButton);
+
+        favorite_floatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(this.getClass().getName(),"Clicking FloatingButton");
+            }
+        });
 
         if(game!=null){
             build_UI();

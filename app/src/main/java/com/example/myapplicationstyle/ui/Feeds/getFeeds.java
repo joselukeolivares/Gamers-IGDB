@@ -1,4 +1,4 @@
-package com.example.myapplicationstyle.ui.reviews;
+package com.example.myapplicationstyle.ui.Feeds;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -13,7 +13,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.myapplicationstyle.MainActivity;
+import com.example.myapplicationstyle.R;
+import com.example.myapplicationstyle.ui.reviews.Review;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,17 +23,21 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class getReviews{
+public class getFeeds {
     String body_request;
 
-    public getReviews(Context context, @Nullable AttributeSet attrs) {
+    public getFeeds(Context context, @Nullable AttributeSet attrs) {
 
     }
 
-    public static  void getData(Context context, int categogy, final int game_idIGDB, final Review.VolleyCallBack successMethod){
+    Context context;
+
+    public static  void getData(Context context, final String category, final int game_idIGDB, final Review.VolleyCallBack successMethod){
         ///Log.i(this.getClass().getName(),"requesting");
         //String url = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-        String url ="https://api-v3.igdb.com/private/reviews";
+        String url ="https://api-v3.igdb.com/feeds";
+        context=context;
+
 
         RequestQueue mRequestQueue= Volley.newRequestQueue(context);
 
@@ -45,8 +50,7 @@ public class getReviews{
         }
 
 
-
-
+        final Context finalContext = context;
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
                 (Request.Method.POST, url, null, new Response.Listener<JSONArray>() {
 
@@ -91,31 +95,50 @@ public class getReviews{
 
             @Override
             public byte[] getBody()  {
-                String httpPostBody="fields category,checksum,conclusion,content,created_at,game,introduction,likes,negative_points,platform,positive_points,slug,title,updated_at,url,user,user_rating,video,views;limit 50;where game="+game_idIGDB+";";
-                    /*
-                    String where_condition="where cover.image_id!=\"\" & cover.image_id!=null ";
-                    if(!desc){
-                        httpPostBody=httpPostBody.concat("sort popularity desc;");
+                String httpPostBody="fields title,category,checksum,content,created_at,feed_likes_count,feed_video,games.name,meta,published_at,pulse,slug,title,uid,updated_at,url,user;\n" +
+                        "sort created_at desc; where content ~ \"https://www.youtube.com\"* ";
+
+                    String where_condition="& category=";
+                    if(category.equals(finalContext.getString(R.string.pref_news_label_value))){
+                        where_condition=where_condition.concat("1;");
+                    }else if(category.equals(finalContext.getString(R.string.pref_news_coming_value))){
+                        where_condition=where_condition.concat("2;");
+
+                    }else if(category.equals(finalContext.getString(R.string.pref_news_newTrailer_value))){
+                        where_condition=where_condition.concat("3;");
+
+                    }else if(category.equals(finalContext.getString(R.string.pref_news_uContributions_value))){
+                        where_condition=where_condition.concat("4;");
+
+                    }else if(category.equals(finalContext.getString(R.string.pref_news_uContribution_value))){
+                        where_condition=where_condition.concat("5;");
+
+                    }else if(category.equals(finalContext.getString(R.string.pref_news_pContribution_value))){
+                        where_condition=where_condition.concat("6;");
+
                     }else{
-                        httpPostBody=httpPostBody.concat("sort popularity asc;");
+                        where_condition=";";
                     }
 
-
-
-
-                    if(!search_request.isEmpty()){
-                        where_condition=where_condition.concat(" & name ~ *\""+search_request+"\"*");
-                    }
-
-                    if(!platform.equals("9999")){
-                        where_condition=where_condition.concat(" & platforms !=n & platforms = {"+platform+"}");
-                    }
-                    where_condition=where_condition.concat(";");
                     httpPostBody=httpPostBody.concat(where_condition);
 
-                     */
+                    /*
+                    <string name="pref_news_coming_value">coming</string>
+                    <string name="pref_news_newTrailer_value">newTrailer</string>
+                    <string name="pref_news_uContributions_value">uContributions</string>
+                    <string name="pref_news_uContribution_value">uContribution</string>
+                    <string name="pref_news_label_pContribution_item">page contribution item</string>
+                    <string name="pref_news_pContribution_value">pContribution</string>
+                    <string name="pref_news_all_value">all</string>
 
-                //Log.i(this.getClass().getName(),httpPostBody);
+    */
+
+
+
+
+
+
+                Log.i(this.getClass().getName(),httpPostBody);
                 return httpPostBody.getBytes();
             }
         };
@@ -127,4 +150,3 @@ public class getReviews{
     }
 
 }
-

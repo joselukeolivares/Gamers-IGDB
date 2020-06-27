@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplicationstyle.DataBase.GameEntry;
 import com.example.myapplicationstyle.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
     ArrayList<GameEntry> games=new ArrayList<>();
     gamesAdapter gamesAdapterObj;
     GridLayoutManager layoutManager;
+
 
 
 
@@ -38,6 +40,7 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         rootView=inflater.inflate(R.layout.games_fragment_layout,container,false);
+
 
         layoutManager=new GridLayoutManager(inflater.getContext(),2);
         gamesAdapterObj=new gamesAdapter(this);

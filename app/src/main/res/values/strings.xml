@@ -48,6 +48,19 @@
     <string name="date_dummy_value">Month Day, Year</string>
     <string name="critic_dummy_value">User\'s Critic</string>
     <string name="review_views">" Views"</string>
+    <string name="positive_points">Positive point</string>
+    <string name="review_negativePoint_label">Negative Point</string>
+    <string name="category">Category</string>
+    <string name="feed_games_related">Feed\'s Games Related</string>
+    <string name="feed_createdAt">Created At</string>
+    <string name="pulse_value">Pulse Article</string>
+    <string name="coming_soon_value">Coming Soon</string>
+    <string name="newTrailer_value">New Trailer</string>
+    <string name="user_contribuited_item_value">User Contribuited Item</string>
+    <string name="user_contribuition_item_value">User Contribuitions Item</string>
+    <string name="page_contributed_item_value">Page Contributed Item</string>
+    <string name="you_areHere_feeds">You are in Feeds now!</string>
+    <string name="you_areHere_games">You are here in Games!</string>
 
 
 </resources>
