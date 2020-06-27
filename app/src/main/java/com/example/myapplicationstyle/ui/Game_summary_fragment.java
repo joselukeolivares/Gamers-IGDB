@@ -1,5 +1,6 @@
 package com.example.myapplicationstyle.ui;
 
+import android.content.Context;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -41,8 +42,11 @@ public class Game_summary_fragment extends Fragment {
     private  TextView playing;
     private  TextView played;
 
+    onClickFavBtn onClickFavBtnObj;
 
-
+    public interface onClickFavBtn{
+        void clickingFavoriteBtn();
+    }
 
 
     private View rootView;
@@ -75,6 +79,7 @@ public class Game_summary_fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(this.getClass().getName(),"Clicking FloatingButton");
+                onClickFavBtnObj.clickingFavoriteBtn();
             }
         });
 
@@ -142,4 +147,13 @@ public class Game_summary_fragment extends Fragment {
         return myDate;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            onClickFavBtnObj=(onClickFavBtn)this;
+        }catch (ClassCastException e){
+            e.printStackTrace();
+        }
+    }
 }

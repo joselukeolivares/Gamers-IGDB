@@ -11,14 +11,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
+import com.example.myapplicationstyle.ui.GamesViewModel;
+
 @Database(entities = {GameEntry.class,ScreenshotEntry.class},version = 1, exportSchema = false)
-
-
 public abstract class AppDataBase extends RoomDatabase{
 
     private static final String LOG_TAG=AppDataBase.class.getName();
     private  static final Object LOCK=new Object();
-    private static  final String DATABASE_NAME="movieBase";
+    private static  final String DATABASE_NAME="gameBase";
     private static  AppDataBase sInstance;
 
     public static AppDataBase getInstance(Context context){
@@ -29,13 +29,16 @@ public abstract class AppDataBase extends RoomDatabase{
                         context.getApplicationContext(),
                         AppDataBase.class,
                         AppDataBase.DATABASE_NAME
-                ).fallbackToDestructiveMigration()
+                )//.fallbackToDestructiveMigration()
+                       .allowMainThreadQueries()
                         .build();
             }
         }
         Log.i(AppDataBase.LOG_TAG,"Getting the database instance");
         return sInstance;
     }
+
+
 
     public abstract GameDao gameDao();
 

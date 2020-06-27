@@ -21,7 +21,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.example.myapplicationstyle.DataBase.AppDataBase;
 import com.example.myapplicationstyle.DataBase.GameEntry;
 import com.example.myapplicationstyle.MainActivity;
 import com.example.myapplicationstyle.R;
@@ -35,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class games_host  extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener,Games_fragment.games_fragment_ItemSelected{
 
@@ -49,6 +54,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     private static boolean desc=false;
     private static String search_request="";
     BottomNavigationView bottomNavigationView;
+    private AppDataBase appDataBase;
 
 
 
@@ -100,11 +106,43 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
                 Log.i(this.getClass().getName(),"Changing search");
             }
         }
-
+        appDataBase=AppDataBase.getInstance(getApplicationContext());
+        setupViewModel();
         getData();
 
 
 
+
+
+    }
+
+    private void setupViewModel() {
+            GamesViewModel gamesViewModel= ViewModelProviders.of(this).get(GamesViewModel.class);
+        gamesViewModel.getGames().observe(this, new Observer<List<GameEntry>>() {
+            @Override
+            public void onChanged(List<GameEntry> gameEntries) {
+                Log.i(this.getClass().getName(),"Updating list of games from LiveData in ViewModel");
+
+                addGamesViewModel( gameEntries);
+
+            }
+        });
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                //mDb.trailersDAO().delete_Trailer();
+                //appDataBase.gameDao().deleteAllGames();
+                //mDb.movieDAO().deleteAllMovies();
+                //appDataBase.screenshotDAO().deleteAllScreenshots();
+            }
+        });
+    }
+
+    public  void addGamesViewModel(List<GameEntry> gameEntries){
+        for(int i=0;i<gameEntries.size();i++){
+            gamesList.add(gameEntries.get(i));
+        }
     }
 
     public void Goto_Feeds(){
@@ -406,6 +444,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
         intent.putExtra("game_idIGDB",game.getId_IGDB());
         intent.putExtra("game_jsonObj",game.getJsonObj());
+        intent.putExtra("game_favorite",game.isFavorite());
 
         startActivity(intent);
 

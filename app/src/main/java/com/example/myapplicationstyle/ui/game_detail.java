@@ -5,13 +5,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.example.myapplicationstyle.DataBase.AppDataBase;
 import com.example.myapplicationstyle.DataBase.GameEntry;
 import com.example.myapplicationstyle.R;
 import com.example.myapplicationstyle.ui.reviews.Review;
@@ -24,13 +29,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class game_detail extends AppCompatActivity {
+import java.util.List;
+
+public class game_detail extends AppCompatActivity  implements Game_summary_fragment.onClickFavBtn{
     private JSONObject gameJsonObj;
     private  GameEntry gameEntry;
     private Button screenshots_Btn;
     private Button videos_Btn;
     private Button reviews_Btn;
     private boolean on_tablet=false;
+    GameViewModelFactory factory;
+    AppDataBase appDataBase;
+    GameViewModel gameViewModel;
+    boolean favorite=false;
 
     FragmentManager fragmentManager=getSupportFragmentManager();
     Game_summary_fragment games_fragment=new Game_summary_fragment();
@@ -54,10 +65,26 @@ public class game_detail extends AppCompatActivity {
             setGameEntry(savedInstanceState.getString("game"));
         }else if(intent!=null){
 
+            factory=new GameViewModelFactory(appDataBase,gameEntry.getId());
+            gameViewModel= ViewModelProviders.of(this,factory).get(GameViewModel.class);
+
+            gameViewModel.getGame().observe(this, new Observer<GameEntry>() {
+                @Override
+                public void onChanged(GameEntry gameEntry) {
+                    if(gameEntry!=null){
+                        gameViewModel.getGame().removeObserver(this);
+                        Log.i(this.getClass().getName(),gameEntry.getName()+" Removed from observe");
+
+                    }
+                }
+            });
+
+
             if(intent.getIntExtra("game_idIGDB",0)!=0){
 
-                if(intent.getBooleanExtra("favorite",false)){
+                if(intent.getBooleanExtra("game_favorite",false)){
                     Log.i(this.getClass().getName(),"Game is favorite?");
+                    favorite=intent.getBooleanExtra("game_favorite",false);
                 }else
                 {
 
@@ -311,4 +338,60 @@ public class game_detail extends AppCompatActivity {
     }
 
 
+    @Override
+    public void clickingFavoriteBtn() {
+
+        if(favorite){
+
+        }else{
+            Log.i(this.getClass().getName(),"Marking Favorite");
+
+            if(findGame(gameEntry.getId())){
+                Toast toast=Toast.makeText(getApplicationContext(),"Deleting  game like favorite",Toast.LENGTH_LONG);
+                toast.show();
+            }else{
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        int id=(int)appDataBase.gameDao().insertGame(gameEntry);
+                        if(id>0){
+                            favorite=true;
+                            Toast toast=Toast.makeText(getApplicationContext(),"inserting game like favorite",Toast.LENGTH_LONG);
+                            toast.show();
+
+                        }
+                    }
+                });
+            }
+
+
+        }
+
+    }
+
+    public boolean findGame(int id){
+
+
+
+        GameViewModel gameViewModel= ViewModelProviders.of(this).get(GameViewModel.class);
+
+        gameViewModel.getGame().observe(this, new Observer <GameEntry>() {
+            @Override
+            public void onChanged(GameEntry gameEntries) {
+                Log.i(this.getClass().getName(),"Updating list of games from LiveData in ViewModel");
+                if(gameEntries!=null){
+                    Log.i(this.getClass().getName(),"The movie exist"+gameEntries.getName());
+                    foundGame=true;
+                }else{
+                    Log.i(this.getClass().getName(),"The movie exist"+gameEntries.getName());
+                    foundGame=false;
+                }
+
+
+            }
+        });
+        return foundGame;
+    }
+
+    boolean foundGame=false;
 }
