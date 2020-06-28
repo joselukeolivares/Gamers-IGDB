@@ -41,6 +41,7 @@ public class Review_detail extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.review_detail);
          cover=(ImageView)findViewById(R.id.game_cover_review);
          name=(TextView)findViewById(R.id.game_name_review);

@@ -61,6 +61,8 @@
     <string name="page_contributed_item_value">Page Contributed Item</string>
     <string name="you_areHere_feeds">You are in Feeds now!</string>
     <string name="you_areHere_games">You are here in Games!</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 
 </resources>

@@ -49,6 +49,7 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.game_detail);
 
         ActionBar actionBar=this.getSupportActionBar();
@@ -65,19 +66,9 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
             setGameEntry(savedInstanceState.getString("game"));
         }else if(intent!=null){
 
-            factory=new GameViewModelFactory(appDataBase,gameEntry.getId());
-            gameViewModel= ViewModelProviders.of(this,factory).get(GameViewModel.class);
 
-            gameViewModel.getGame().observe(this, new Observer<GameEntry>() {
-                @Override
-                public void onChanged(GameEntry gameEntry) {
-                    if(gameEntry!=null){
-                        gameViewModel.getGame().removeObserver(this);
-                        Log.i(this.getClass().getName(),gameEntry.getName()+" Removed from observe");
+            appDataBase=AppDataBase.getInstance(getApplicationContext());
 
-                    }
-                }
-            });
 
 
             if(intent.getIntExtra("game_idIGDB",0)!=0){
@@ -342,26 +333,28 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
     public void clickingFavoriteBtn() {
 
         if(favorite){
-
+            Log.i(this.getClass().getName(),"Game is marked like favorite. Preparing to delete from DB");
         }else{
-            Log.i(this.getClass().getName(),"Marking Favorite");
+            Log.i(this.getClass().getName(),"Games is not Favorite");
 
             if(findGame(gameEntry.getId())){
-                Toast toast=Toast.makeText(getApplicationContext(),"Deleting  game like favorite",Toast.LENGTH_LONG);
-                toast.show();
+                Log.i(this.getClass().getName(),"Game is not marked like favorite, but was found in DB "+gameEntry.getId());
             }else{
+
+                /*
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
                         int id=(int)appDataBase.gameDao().insertGame(gameEntry);
                         if(id>0){
                             favorite=true;
-                            Toast toast=Toast.makeText(getApplicationContext(),"inserting game like favorite",Toast.LENGTH_LONG);
-                            toast.show();
+                            Log.i(this.getClass().getName(),"inserting game like favorite in DB");
 
                         }
                     }
                 });
+
+                 */
             }
 
 
@@ -371,26 +364,40 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
 
     public boolean findGame(int id){
 
+        /*
+        factory=new GameViewModelFactory(appDataBase,0);
+        gameViewModel= ViewModelProviders.of(this,factory).get(GameViewModel.class);
 
 
-        GameViewModel gameViewModel= ViewModelProviders.of(this).get(GameViewModel.class);
+         */
 
-        gameViewModel.getGame().observe(this, new Observer <GameEntry>() {
+        GamesViewModel gameViewModel_opt= ViewModelProviders.of(this).get(GamesViewModel.class);
+
+        gameViewModel_opt.getGames().observe(this, new Observer <List<GameEntry>>() {
             @Override
-            public void onChanged(GameEntry gameEntries) {
+            public void onChanged(List<GameEntry> gameEntries) {
                 Log.i(this.getClass().getName(),"Updating list of games from LiveData in ViewModel");
                 if(gameEntries!=null){
-                    Log.i(this.getClass().getName(),"The movie exist"+gameEntries.getName());
-                    foundGame=true;
+                    Log.i(this.getClass().getName(),"The game exist"+gameEntries.get(0).getName());
+                    gameFound();
                 }else{
-                    Log.i(this.getClass().getName(),"The movie exist"+gameEntries.getName());
-                    foundGame=false;
+                    Log.i(this.getClass().getName(),"The game not exist");
+                    gameNotFound();
                 }
 
 
             }
         });
         return foundGame;
+    }
+
+
+    public void gameFound(){
+        Log.i(this.getClass().getName(),"Game found. Can be deleted");
+    }
+
+    public void gameNotFound(){
+        Log.i(this.getClass().getName(),"Game Not found. Can be inserted");
     }
 
     boolean foundGame=false;

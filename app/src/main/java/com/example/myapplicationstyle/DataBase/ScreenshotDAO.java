@@ -13,7 +13,7 @@ public interface ScreenshotDAO {
     LiveData<List<ScreenshotEntry>> loadAllScreenshots();
 
     @Insert
-    long insertScreenshot(GameEntry gameEntry);
+    long insertScreenshot(ScreenshotEntry screenshotEntry);
 
     @Delete
     void deleteScreenshot(ScreenshotEntry screenshotEntry);
@@ -25,5 +25,5 @@ public interface ScreenshotDAO {
     void deleteScreenshotById(int id);
 
     @Query("SELECT * FROM screenshot WHERE id_game=:id_game")
-    LiveData<GameEntry> loadScreenshotByGameId(int id_game);
+    LiveData<List<ScreenshotEntry>> loadScreenshotByGameId(int id_game);
 }

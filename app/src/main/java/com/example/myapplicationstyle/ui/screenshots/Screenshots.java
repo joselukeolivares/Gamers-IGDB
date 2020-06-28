@@ -37,6 +37,7 @@ public class Screenshots extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.screenshots);
 
         ActionBar actionBar=this.getSupportActionBar();

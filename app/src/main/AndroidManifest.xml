@@ -12,6 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:name=".GameAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/game_app_widget_info" />
+        </receiver>
+
+        <service android:name=".games_service"></service>
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/pref_games" />
@@ -23,59 +35,43 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.games_host"/>
+        <activity android:name=".ui.games_host" />
         <activity
             android:name=".ui.Activity_settings"
-            android:theme="@style/AppTheme_with_AB"
             android:parentActivityName=".ui.games_host"
-
-            >
+            android:theme="@style/AppTheme_with_AB">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/search_material"/>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/search_material" />
         </activity>
-        <activity android:name=".ui.game_detail"
+        <activity
+            android:name=".ui.game_detail"
             android:parentActivityName=".ui.games_host"
-            android:theme="@style/AppTheme_with_AB"
-            >
-
-        </activity>
-
-        <activity android:name=".ui.screenshots.Screenshots"
+            android:theme="@style/AppTheme_with_AB"></activity>
+        <activity
+            android:name=".ui.screenshots.Screenshots"
             android:parentActivityName=".ui.game_detail"
-            android:theme="@style/AppTheme_with_AB"
-            >
-
-        </activity>
-        <activity android:name=".ui.videos.Videos"
+            android:theme="@style/AppTheme_with_AB"></activity>
+        <activity
+            android:name=".ui.videos.Videos"
             android:parentActivityName=".ui.game_detail"
-            android:theme="@style/AppTheme_with_AB">
-
-        </activity>
-
-        <activity android:name=".ui.reviews.Review"
+            android:theme="@style/AppTheme_with_AB"></activity>
+        <activity
+            android:name=".ui.reviews.Review"
             android:parentActivityName=".ui.game_detail"
-            android:theme="@style/AppTheme_with_AB">
-
-        </activity>
-
-        <activity android:name=".ui.reviews.Review_detail"
+            android:theme="@style/AppTheme_with_AB"></activity>
+        <activity
+            android:name=".ui.reviews.Review_detail"
             android:parentActivityName=".ui.game_detail"
-            android:theme="@style/AppTheme_with_AB">
-
-        </activity>
-
-        <activity android:name=".ui.Feeds.Feeds"
+            android:theme="@style/AppTheme_with_AB"></activity>
+        <activity
+            android:name=".ui.Feeds.Feeds"
             android:parentActivityName=".ui.game_detail"
-            android:theme="@style/AppTheme_with_AB">
-
-        </activity>
-
-
-
-
+            android:theme="@style/AppTheme_with_AB"></activity>
     </application>
 
 </manifest>

@@ -16,7 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplicationstyle.DataBase.GameEntry;
+import com.example.myapplicationstyle.GameAppWidget;
 import com.example.myapplicationstyle.R;
+import com.example.myapplicationstyle.games_service;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -54,11 +56,12 @@ public class Game_summary_fragment extends Fragment {
     public Game_summary_fragment() {
     }
     FloatingActionButton favorite_floatingButton;
+    Context context;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        context=container.getContext();
         rootView=inflater.inflate(R.layout.game_info_fragment,container,false);
         cover=(ImageView)rootView.findViewById(R.id.game_cover);
         game_name=(TextView)rootView.findViewById(R.id.game_name);
@@ -98,6 +101,8 @@ public class Game_summary_fragment extends Fragment {
         Picasso.with(getContext()).load(uri).into(cover);
         String name=game.getName();
         game_name.setText(name!=null?name:"");
+
+        games_service.updatingService(context,name,uri);
 
 
         long milliseconds=game.getFirst_release_date();
@@ -151,7 +156,7 @@ public class Game_summary_fragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try{
-            onClickFavBtnObj=(onClickFavBtn)this;
+            onClickFavBtnObj=(onClickFavBtn)context;
         }catch (ClassCastException e){
             e.printStackTrace();
         }

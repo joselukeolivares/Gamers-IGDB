@@ -64,6 +64,7 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.feeds_layout);
         ActionBar actionBar=this.getSupportActionBar();
 

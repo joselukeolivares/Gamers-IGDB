@@ -104,6 +104,7 @@ public class Review extends AppCompatActivity implements SharedPreferences.OnSha
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.reviews);
 
         ActionBar actionBar=this.getSupportActionBar();

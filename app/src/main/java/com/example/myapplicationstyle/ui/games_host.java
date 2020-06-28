@@ -65,6 +65,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(this.getClass().getName(),"onCreate");
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.games_host);
 
         imgBar=(ImageView)findViewById(R.id.img_bar);
@@ -106,8 +107,10 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
                 Log.i(this.getClass().getName(),"Changing search");
             }
         }
+
         appDataBase=AppDataBase.getInstance(getApplicationContext());
         setupViewModel();
+
         getData();
 
 
