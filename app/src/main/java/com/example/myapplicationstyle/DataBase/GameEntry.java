@@ -8,7 +8,6 @@ public class GameEntry {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int id_IGDB;
-
     private String Name;
     private String coverUrl;
     private String platforms;

@@ -7,7 +7,7 @@ import com.example.myapplicationstyle.DataBase.AppDataBase;
 import com.example.myapplicationstyle.DataBase.GameEntry;
 
 public class GameViewModel extends ViewModel {
-    private LiveData<GameEntry> game;
+    private GameEntry game;
 
 
     public GameViewModel(AppDataBase dataBase,int gameEntryID) {
@@ -15,6 +15,6 @@ public class GameViewModel extends ViewModel {
         game=dataBase.gameDao().loadGameById(gameEntryID);
     }
 
-    public LiveData<GameEntry> getGame(){return  game;}
+    public GameEntry getGame(){return  game;}
 
 }

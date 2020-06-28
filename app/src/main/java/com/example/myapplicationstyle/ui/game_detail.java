@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -42,6 +43,7 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
     AppDataBase appDataBase;
     GameViewModel gameViewModel;
     boolean favorite=false;
+    int game_id=0;
 
     FragmentManager fragmentManager=getSupportFragmentManager();
     Game_summary_fragment games_fragment=new Game_summary_fragment();
@@ -73,9 +75,12 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
 
             if(intent.getIntExtra("game_idIGDB",0)!=0){
 
-                if(intent.getBooleanExtra("game_favorite",false)){
-                    Log.i(this.getClass().getName(),"Game is favorite?");
+                if(intent.getIntExtra("game_id",0)!=0){
+                    Log.i(this.getClass().getName(),"Game come as favorite");
+                    game_id=intent.getIntExtra("game_id",0);
                     favorite=intent.getBooleanExtra("game_favorite",false);
+                    findGame(game_id,true);
+                    //admin_content_fragment();
                 }else
                 {
 
@@ -87,6 +92,7 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
             }else{
                 Log.i(this.getClass().getName(),"Game ID not valid");
                 if(gameJsonObj!=null){
+                    Log.i(this.getClass().getName(),"gameJsonObj is null");
                     setGameEntry(gameJsonObj.toString());
                 }else{
                     Log.i(this.getClass().getName(),"gameJsonObj is null");
@@ -205,6 +211,7 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
                 gameJsonObj = new JSONObject(game);
                 gameEntry = new GameEntry();
                 gameEntry.setJsonObj(game);
+
 
 
 
@@ -337,39 +344,18 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
         }else{
             Log.i(this.getClass().getName(),"Games is not Favorite");
 
-            if(findGame(gameEntry.getId())){
-                Log.i(this.getClass().getName(),"Game is not marked like favorite, but was found in DB "+gameEntry.getId());
-            }else{
+            findGame(gameEntry.getId(),false);
 
-                /*
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        int id=(int)appDataBase.gameDao().insertGame(gameEntry);
-                        if(id>0){
-                            favorite=true;
-                            Log.i(this.getClass().getName(),"inserting game like favorite in DB");
 
-                        }
-                    }
-                });
-
-                 */
-            }
 
 
         }
 
     }
 
-    public boolean findGame(int id){
+    public boolean findGame(int id, final boolean update_entity){
 
         /*
-        factory=new GameViewModelFactory(appDataBase,0);
-        gameViewModel= ViewModelProviders.of(this,factory).get(GameViewModel.class);
-
-
-         */
 
         GamesViewModel gameViewModel_opt= ViewModelProviders.of(this).get(GamesViewModel.class);
 
@@ -388,16 +374,92 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
 
             }
         });
+
+         */
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                int id=0;
+                if(update_entity){
+                    id=game_id;
+                    Log.i(this.getClass().getName(),"Id from DB: "+game_id);
+                }else{
+                    id=gameEntry.getId();
+                    Log.i(this.getClass().getName(),"Id from entity"+gameEntry.getId());
+                }
+
+
+
+               GameEntry gameDB=appDataBase.gameDao().loadGameById(id);
+               if(gameDB!=null){
+                   Log.i(this.getClass().getName(),"Game found. Can be deleted");
+                   Log.i(this.getClass().getName(),"Name "+gameDB.getName());
+                   Log.i(this.getClass().getName(),"ID "+gameDB.getId());
+
+                   if(update_entity){
+                       gameEntry=gameDB;
+                       Log.i(this.getClass().getName(),"Game updated");
+                       admin_content_fragment();
+                   }else{
+                       //insert game in DB
+                       gameFound();
+                   }
+               }else{
+                   Log.i(this.getClass().getName(),"Game Not found. Can be inserted ");
+                   if(!update_entity){
+                       //delete game from DB
+                       gameNotFound();
+                   }
+
+               }
+            }
+        });
         return foundGame;
     }
 
 
     public void gameFound(){
         Log.i(this.getClass().getName(),"Game found. Can be deleted");
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                appDataBase.gameDao().deleteGameById(gameEntry.getId());
+                    favorite=false;
+                    Log.i(this.getClass().getName(),"Deleting game like favorite in DB "+gameEntry.getId());
+
+
+
+            }
+        });
+
     }
 
     public void gameNotFound(){
-        Log.i(this.getClass().getName(),"Game Not found. Can be inserted");
+        Log.i(this.getClass().getName(),"Game Not found. Can be inserted ");
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+
+                    int id=(int)appDataBase.gameDao().insertGame(gameEntry);
+                    if(id>0){
+                        favorite=true;
+                        Log.i(this.getClass().getName(),"inserting game like favorite in DB "+id);
+                        gameEntry.setId(id);
+                        //gameEntry.setFavorite(true);
+
+                    }
+                }
+            });
+
+    }
+
+    public void inertGame_inDB(){
+
+    }
+
+    public void deleteGame_FromDB(){
+
     }
 
     boolean foundGame=false;

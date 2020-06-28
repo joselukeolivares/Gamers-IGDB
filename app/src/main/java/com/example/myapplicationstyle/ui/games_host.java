@@ -120,17 +120,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     }
 
     private void setupViewModel() {
-            GamesViewModel gamesViewModel= ViewModelProviders.of(this).get(GamesViewModel.class);
-        gamesViewModel.getGames().observe(this, new Observer<List<GameEntry>>() {
-            @Override
-            public void onChanged(List<GameEntry> gameEntries) {
-                Log.i(this.getClass().getName(),"Updating list of games from LiveData in ViewModel");
-
-                addGamesViewModel( gameEntries);
-
-            }
-        });
-
+/*
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -140,12 +130,37 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
                 //appDataBase.screenshotDAO().deleteAllScreenshots();
             }
         });
+
+ */
+
+            GamesViewModel gamesViewModel= ViewModelProviders.of(this).get(GamesViewModel.class);
+        gamesViewModel.getGames().observe(this, new Observer<List<GameEntry>>() {
+            @Override
+            public void onChanged(List<GameEntry> gameEntries) {
+                Log.i(this.getClass().getName(),"Updating list of games from LiveData in ViewModel");
+
+                addGamesViewModel( gameEntries);
+
+
+
+
+            }
+        });
+
+
     }
 
     public  void addGamesViewModel(List<GameEntry> gameEntries){
+        Log.i(this.getClass().getName(),"Games in DB "+gameEntries.size());
         for(int i=0;i<gameEntries.size();i++){
             gamesList.add(gameEntries.get(i));
+            Log.i(this.getClass().getName(),"Game from DB "+gameEntries.get(i).getId()+" "+gameEntries.get(i).getName());
         }
+
+        games_igdb.setGamesData(gamesList);
+        games_igdb.updateDataAdapter();
+
+
     }
 
     public void Goto_Feeds(){
@@ -436,6 +451,8 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
             auto_refresh=false;
             getData();
         }
+
+
     }
 
     @Override
@@ -448,6 +465,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         intent.putExtra("game_idIGDB",game.getId_IGDB());
         intent.putExtra("game_jsonObj",game.getJsonObj());
         intent.putExtra("game_favorite",game.isFavorite());
+        intent.putExtra("game_id",game.getId());
 
         startActivity(intent);
 
@@ -455,5 +473,11 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(this.getClass().getName(),"onRestart");
 
+
+    }
 }

@@ -62,6 +62,7 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
     public void updateDataAdapter(){
         gamesAdapterObj.updateData(this.games);
         gamesAdapterObj.notifyDataSetChanged();
+        Log.i(this.getClass().getName(),"Updating games in Game Fragment");
     }
 
     @Override

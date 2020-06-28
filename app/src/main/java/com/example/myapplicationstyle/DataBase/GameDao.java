@@ -18,14 +18,14 @@ public interface GameDao {
     long insertGame(GameEntry gameEntry);
 
     @Delete
-    void deleteMovie(GameEntry gameEntry);
+    void deleteGame(GameEntry gameEntry);
 
     @Query("DELETE FROM game")
     void deleteAllGames();
 
     @Query("DELETE FROM game where id=:id")
-    void deleteMovieById(int id);
+    void deleteGameById(int id);
 
     @Query("SELECT * FROM game WHERE id=:id")
-    LiveData<GameEntry> loadGameById(int id);
+    GameEntry loadGameById(int id);
 }
