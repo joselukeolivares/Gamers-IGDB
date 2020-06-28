@@ -25,6 +25,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.myapplicationstyle.Adds;
 import com.example.myapplicationstyle.DataBase.AppDataBase;
 import com.example.myapplicationstyle.DataBase.GameEntry;
 import com.example.myapplicationstyle.MainActivity;
@@ -109,9 +110,10 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         }
 
         appDataBase=AppDataBase.getInstance(getApplicationContext());
+        getData();
         setupViewModel();
 
-        getData();
+
 
 
 
@@ -150,6 +152,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
     }
 
+    Context context=this;
     public  void addGamesViewModel(List<GameEntry> gameEntries){
         Log.i(this.getClass().getName(),"Games in DB "+gameEntries.size());
         for(int i=0;i<gameEntries.size();i++){
@@ -157,8 +160,10 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
             Log.i(this.getClass().getName(),"Game from DB "+gameEntries.get(i).getId()+" "+gameEntries.get(i).getName());
         }
 
-        games_igdb.setGamesData(gamesList);
-        games_igdb.updateDataAdapter();
+        //loadedData=response.toString();
+        //data_to_Json(loadedData);
+        //setupGames(1);
+
 
 
     }
@@ -185,7 +190,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         super.onSaveInstanceState(outState, outPersistentState);
 
     }
-
+private String loadedData;
     public void getData(){
             gamesList.clear();
              getJson.getData(this,platform_request,category_request,desc,search_request, new MainActivity.VolleyCallBack() {
@@ -194,8 +199,9 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
             @Override
             public void succesVolley(JSONArray response) {
                 //Log.i(this.getClass().getName(), response.toString());
-
+                loadedData=response.toString();
                 data_to_Json(response.toString());
+
                 setupGames(1);
             }
         });
@@ -337,6 +343,9 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
     }
 
+
+    Adds adds=new Adds();
+
     public void setupGames(int option){
 
         if(option==1){
@@ -345,8 +354,12 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
                     .replace(R.id.games_fragment,games_igdb)
                     .commit();
             Log.i(this.getClass().getName(),"Game list: "+gamesList.size());
-            games_igdb.setGamesData(gamesList);
+            games_igdb.setGamesData(gamesList,this);
         }
+
+        fragmentManager.beginTransaction()
+                .add(R.id.add_fragment,adds)
+                .commit();
 
     }
 
@@ -449,7 +462,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         if(auto_refresh){
             Log.i(this.getClass().getName(),"Auto refresh working");
             auto_refresh=false;
-            getData();
+
         }
 
 

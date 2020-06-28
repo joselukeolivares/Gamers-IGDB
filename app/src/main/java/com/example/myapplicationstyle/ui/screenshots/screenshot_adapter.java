@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplicationstyle.DataBase.ScreenshotEntry;
 import com.example.myapplicationstyle.R;
 import com.squareup.picasso.Picasso;
 
@@ -18,11 +19,11 @@ import java.util.ArrayList;
 
 public class screenshot_adapter extends RecyclerView.Adapter<screenshot_adapter.vh> {
     private Context context;
-    private ArrayList<String> images=new ArrayList<>();
+    private ArrayList<ScreenshotEntry> images=new ArrayList<>();
     private clickonScreenshotAdapter clickonScreenshotAdapterObj;
 
     public interface clickonScreenshotAdapter{
-         void onclickscreenshot(String image, boolean favorite);
+         void onclickscreenshot(ScreenshotEntry image, boolean favorite, int position);
     }
 
     public screenshot_adapter(clickonScreenshotAdapter clickonScreenshotAdapterObj){
@@ -43,11 +44,22 @@ public class screenshot_adapter extends RecyclerView.Adapter<screenshot_adapter.
 
     @Override
     public void onBindViewHolder(@NonNull vh holder, int position) {
-        String screen_id=images.get(position);
-        String uri=context.getString(R.string.uriCover)+screen_id+context.getString(R.string.jpg);
+        ScreenshotEntry screenshotEntry=images.get(position);
+        String uri=context.getString(R.string.uriCover)+screenshotEntry.getUrl()+context.getString(R.string.jpg);
         Log.i("screenshot uri",uri);
         Picasso.with(context).load(uri).into(holder.screenshot);
 
+        if(!screenshotEntry.isFavorite()){
+            holder.heart_icon.setVisibility(View.INVISIBLE);
+            Log.i(this.getClass().getName(),"Visible");
+
+            screenshotEntry.setFavorite(false);
+        }else{
+            holder.heart_icon.setVisibility(View.VISIBLE);
+            Log.i(this.getClass().getName(),"inVisible");
+
+            screenshotEntry.setFavorite(true);
+        }
 
     }
 
@@ -61,7 +73,7 @@ public class screenshot_adapter extends RecyclerView.Adapter<screenshot_adapter.
 
     }
 
-    public void setData(ArrayList<String> new_data){
+    public void setData(ArrayList<ScreenshotEntry> new_data){
         images=new_data;
     }
 
@@ -81,19 +93,21 @@ public class screenshot_adapter extends RecyclerView.Adapter<screenshot_adapter.
 
         @Override
         public void onClick(View v) {
-            String screen_id=images.get(getAdapterPosition());
+            ScreenshotEntry screenshotEntry=images.get(getAdapterPosition());
             boolean favorite;
 
             if(heart_icon.getVisibility()==View.VISIBLE){
                 heart_icon.setVisibility(View.INVISIBLE);
                 Log.i(this.getClass().getName(),"Visible");
                 favorite=false;
+                screenshotEntry.setFavorite(false);
             }else{
                 heart_icon.setVisibility(View.VISIBLE);
                 Log.i(this.getClass().getName(),"inVisible");
                 favorite=true;
+                screenshotEntry.setFavorite(true);
             }
-            clickonScreenshotAdapterObj.onclickscreenshot(screen_id,favorite);
+            clickonScreenshotAdapterObj.onclickscreenshot(screenshotEntry,favorite,getAdapterPosition());
 
 
         }

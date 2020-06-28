@@ -6,12 +6,7 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "screenshot",foreignKeys = @ForeignKey(
-        entity = GameEntry.class,
-        parentColumns = "id",
-        childColumns = "id_game",
-        onDelete = CASCADE
-))
+@Entity(tableName = "screenshot")
 public class ScreenshotEntry {
 
     public int getId() {
@@ -57,6 +52,26 @@ public class ScreenshotEntry {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int id_IGB;
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    private boolean favorite=false;
+
+    public int getGame_id_IGDB() {
+        return game_id_IGDB;
+    }
+
+    public void setGame_id_IGDB(int game_id_IGDB) {
+        this.game_id_IGDB = game_id_IGDB;
+    }
+
+    private int game_id_IGDB;
 
     private String name;
     private String url;

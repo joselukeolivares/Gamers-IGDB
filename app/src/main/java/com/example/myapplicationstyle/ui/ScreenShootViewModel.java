@@ -9,7 +9,7 @@ import com.example.myapplicationstyle.DataBase.ScreenshotEntry;
 import java.util.List;
 
 public class ScreenShootViewModel extends ViewModel {
-    private LiveData<List<ScreenshotEntry>> screenshots;
+    private List<ScreenshotEntry> screenshots;
 
     public ScreenShootViewModel(AppDataBase appDataBase,int gameId){
         screenshots=appDataBase.screenshotDAO().loadScreenshotByGameId(gameId);

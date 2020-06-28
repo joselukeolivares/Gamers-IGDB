@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import com.example.myapplicationstyle.ui.GamesViewModel;
 
-@Database(entities = {GameEntry.class,ScreenshotEntry.class},version = 1, exportSchema = false)
+@Database(entities = {GameEntry.class,ScreenshotEntry.class},version = 3, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase{
 
     private static final String LOG_TAG=AppDataBase.class.getName();
@@ -29,7 +29,7 @@ public abstract class AppDataBase extends RoomDatabase{
                         context.getApplicationContext(),
                         AppDataBase.class,
                         AppDataBase.DATABASE_NAME
-                )//.fallbackToDestructiveMigration()
+                ).fallbackToDestructiveMigration()
                        .allowMainThreadQueries()
                         .build();
             }

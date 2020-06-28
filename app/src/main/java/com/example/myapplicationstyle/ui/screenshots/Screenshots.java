@@ -31,6 +31,7 @@ public class Screenshots extends AppCompatActivity {
     private int game_idIGDB;
     private String game_name;
     private String game_cover;
+    private int game_id;
     private JSONObject game_jsonObj;
     private String screenshotJsonArray;
 
@@ -118,7 +119,7 @@ public class Screenshots extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.screenshot_container,screenshot_fragment)
                 .commit();
-        screenshot_fragment.setData(game_name,game_cover,screenshotJsonArray);
+        screenshot_fragment.setData(game_name,game_id,game_cover,screenshotJsonArray);
     }
 
     @Override

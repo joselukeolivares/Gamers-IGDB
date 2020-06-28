@@ -26,6 +26,7 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
     ArrayList<GameEntry> games=new ArrayList<>();
     gamesAdapter gamesAdapterObj;
     GridLayoutManager layoutManager;
+    Context context;
 
 
 
@@ -43,7 +44,7 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
 
 
         layoutManager=new GridLayoutManager(inflater.getContext(),2);
-        gamesAdapterObj=new gamesAdapter(this);
+        gamesAdapterObj=new gamesAdapter(this,context);
 
 
         RecyclerView recyclerView=(RecyclerView)rootView.findViewById(R.id.games_recycler_view);
@@ -54,8 +55,9 @@ public class Games_fragment extends Fragment implements gamesAdapter.onClickAdap
         return rootView;
     }
 
-    public void setGamesData(ArrayList<GameEntry> data ){
+    public void setGamesData(ArrayList<GameEntry> data,Context context ){
         games=data;
+        this.context=context;
 
     }
 

@@ -27,18 +27,19 @@ public class gamesAdapter extends RecyclerView.Adapter<gamesAdapter.VH>{
         void onClick(GameEntry gameEntry);
     }
 
-    public gamesAdapter(onClickAdapter onclickAdapter ){
+    public gamesAdapter(onClickAdapter onclickAdapter,Context context ){
         this.onClickAdapter=onclickAdapter;
+        this.context=context;
 
     }
 
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context=parent.getContext();
+
         int layout=R.layout.game_view_holder;
 
-        LayoutInflater inflater=LayoutInflater.from(context);
+        LayoutInflater inflater=LayoutInflater.from(parent.getContext());
         View view=inflater.inflate(layout,parent,false);
         return new VH(view);
 

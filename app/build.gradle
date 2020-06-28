@@ -29,7 +29,7 @@ android {
     productFlavors {
         paid {
             dimension 'version'
-            applicationId 'com.example.myapplicationstyle.paid'
+            applicationId 'com.example.myapplicationstyle'
             versionNameSuffix '-paid'
 
         }
