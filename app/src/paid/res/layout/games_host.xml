@@ -19,6 +19,7 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         >
 
+
         <FrameLayout
             android:id="@+id/games_fragment"
             android:layout_width="match_parent"
@@ -71,6 +72,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/empty_result_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_result"
+            app:layout_constraintBottom_toTopOf="@+id/add_fragment" />
+
 
         <FrameLayout
             android:id="@+id/add_fragment"
