@@ -10,7 +10,7 @@
 
             ></activity>
 
-
+        <service android:name=".ui.searchIntent"></service>
 
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

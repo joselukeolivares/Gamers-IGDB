@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
+import android.os.ResultReceiver;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -449,11 +451,26 @@ private String loadedData;
     }
 
     public void performUpdate(String query){
+        Log.i(this.getClass().getName(),"search service init");
         Intent intent=new Intent(this,searchIntent.class);
         intent.putExtra("platform_request",platform_request);
         intent.putExtra("category_request",category_request);
         intent.putExtra("desc",desc);
         intent.putExtra("search_query",query);
+        intent.putExtra(searchIntent.MyResultReceiver.class.getSimpleName(), new searchIntent.MyResultReceiver(new Handler()).setOnMyResultListener(new searchIntent.MyResultReceiver.OnMyResultListener(){
+            @Override
+            public void onReceiveResult(int resultCode, Bundle resultData){
+
+                String message=resultData.getString("search_request");
+                if(message!=null){
+                    Log.i(this.getClass().getName(),message);
+                }else{
+                    Log.i(this.getClass().getName(),"It's null");
+                }
+
+
+            }
+        }));
         startService(intent);
     }
 
@@ -507,34 +524,6 @@ private String loadedData;
 
     }
 
-    class searchIntent extends IntentService {
 
-        public searchIntent() {
-            super("name");
-        }
-
-        @Override
-        protected void onHandleIntent(@Nullable Intent intent) {
-            String platform_request=intent.getStringExtra("platform_request");
-            String category_request=intent.getStringExtra("category_request");
-            boolean desc=intent.getBooleanExtra("desc",true);
-            String search_request=intent.getStringExtra("search_request");
-
-
-            getJson.getData(this,platform_request,category_request,desc,search_request, new MainActivity.VolleyCallBack() {
-
-
-                @Override
-                public void succesVolley(JSONArray response) {
-
-                    data_to_Json(response.toString());
-
-
-                }
-            });
-
-        }
-
-    }
 
 }
