@@ -25,6 +25,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class getJson extends View{
 
     String body_request;
@@ -122,6 +123,6 @@ public class getJson extends View{
         //requestQueue.getInstance(this).addToRequestQueue(jsonObjectRequest);
         mRequestQueue.add(jsonObjectRequest);
 
-     }
-
     }
+
+}

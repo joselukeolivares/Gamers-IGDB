@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     private  ImageView imgBar;
     private String game_poster_url="https://images.igdb.com/igdb/image/upload/t_cover_big/co20uw.jpg";
     private ArrayList<GameEntry> gamesList=new ArrayList<>();
+    private ArrayList<GameEntry> gamesListAux;
     private static boolean auto_refresh=false;
     private static String platform_request;
     public static String category_request;
@@ -60,11 +62,12 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     private static String search_request="";
     BottomNavigationView bottomNavigationView;
     private AppDataBase appDataBase;
+    String json_auxiliar;
 
 
 
     private FragmentManager fragmentManager=getSupportFragmentManager();
-    Games_fragment games_igdb=new Games_fragment();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +75,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         Log.i(this.getClass().getName(),"onCreate");
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.games_host);
-
+        emptyResult_text=(TextView)findViewById(R.id.empty_result_textView);
         imgBar=(ImageView)findViewById(R.id.img_bar);
         Picasso.with(this).load(game_poster_url).into(imgBar);
 
@@ -103,17 +106,29 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         setupSharedPreferences();
 
         Intent intent=getIntent();
-        if(intent!=null){
+        if(savedInstanceState!=null){
+            json_auxiliar=savedInstanceState.getString("json_auxiliar");
+
+            data_to_Json(json_auxiliar);
+
+        }else if(intent!=null){
             Log.i(this.getClass().getName(),"from intent");
             if(intent.getStringExtra("search_query")!=null){
                 search_request=intent.getStringExtra("search_query");
                 Log.i(this.getClass().getName(),"Changing search");
+                performUpdate(search_request);
             }
+
+
+
+
+        }
+        if(appDataBase==null){
+            appDataBase=AppDataBase.getInstance(getApplicationContext());
+            setupViewModel();
         }
 
-        appDataBase=AppDataBase.getInstance(getApplicationContext());
-        getData();
-        setupViewModel();
+
 
 
 
@@ -124,17 +139,17 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     }
 
     private void setupViewModel() {
-/*
+
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 //mDb.trailersDAO().delete_Trailer();
                 //appDataBase.gameDao().deleteAllGames();
-                //mDb.movieDAO().deleteAllMovies();
+
                 //appDataBase.screenshotDAO().deleteAllScreenshots();
             }
         });
-
+/*
  */
 
             GamesViewModel gamesViewModel= ViewModelProviders.of(this).get(GamesViewModel.class);
@@ -156,22 +171,33 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
     Context context=this;
     public  void addGamesViewModel(List<GameEntry> gameEntries){
-        Log.i(this.getClass().getName(),"Games in DB "+gameEntries.size());
-        for(int i=0;i<gameEntries.size();i++){
-            GameEntry gameEntry=gameEntries.get(i);
-            gameEntry.setFavorite(true);
-            gamesList.add(gameEntry);
+        Log.i(this.getClass().getName(),count+" Games in DB "+gameEntries.size());
+        if(count==0){
+            gamesListAux=new ArrayList<>();
+            gamesListAux.addAll(gamesList);
+            for(int i=0;i<gameEntries.size();i++){
+                GameEntry gameEntry=gameEntries.get(i);
+                gameEntry.setFavorite(true);
+                gamesListAux.add(gameEntry);
 
-            Log.i(this.getClass().getName(),"Game from DB "+gameEntries.get(i).getId()+" "+gameEntries.get(i).getName());
+                Log.i(this.getClass().getName(),"Game from DB "+gameEntries.get(i).getId()+" "+gameEntries.get(i).getName());
+            }
+
+            gamesList.clear();
+            gamesList.addAll(gamesListAux);
+            count++;
+            //loadedData=response.toString();
+            //data_to_Json(loadedData);
+
+            setupGames(1);
         }
 
-        //loadedData=response.toString();
-        //data_to_Json(loadedData);
-        //setupGames(1);
 
 
 
     }
+
+    int count=0;
 
     public void Goto_Feeds(){
         Intent intent=new Intent(this, Feeds.class);
@@ -186,13 +212,27 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         }else{
             Toast toast=Toast.makeText(this,getString(R.string.you_areHere_games),Toast.LENGTH_LONG);
             toast.show();
+            gamesList.clear();
+            if(gamesListAux!=null){
+                gamesList.addAll(gamesListAux);
+                gamesListAux.clear();
+            }
+
+            if(json_auxiliar!=null && !json_auxiliar.isEmpty()){
+                search_request="";
+                getData();
+            }
+
+            setupGames(1);
+
         }
 
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("json_auxiliar",json_auxiliar);
 
     }
 private String loadedData;
@@ -336,6 +376,13 @@ private String loadedData;
 
 
                 }
+                    if(gamesList!=null){
+                        emptyResult_text.setVisibility(View.INVISIBLE);
+                        emptyResult_text.setText("");
+                }else{
+                        emptyResult_text.setVisibility(View.VISIBLE);
+                        emptyResult_text.setText(getString(R.string.empty_result));
+                    }
 
                     setupGames(1);
 
@@ -345,7 +392,7 @@ private String loadedData;
 
 
         }
-        emptyResult_text=(TextView)findViewById(R.id.empty_result_textView);
+
         if(gamesList!=null && gamesList.isEmpty()){
             emptyResult_text.setText(getString(R.string.empty_result));
         }else{
@@ -358,7 +405,7 @@ private String loadedData;
     Adds adds=new Adds();
 
     public void setupGames(int option){
-
+        Games_fragment games_igdb=new Games_fragment();
         if(option==1){
 
             fragmentManager.beginTransaction()
@@ -370,7 +417,7 @@ private String loadedData;
         }
 
         fragmentManager.beginTransaction()
-                .add(R.id.add_fragment,adds)
+                .replace(R.id.add_fragment,adds)
                 .commit();
 
     }
@@ -460,10 +507,11 @@ private String loadedData;
         intent.putExtra(searchIntent.MyResultReceiver.class.getSimpleName(), new searchIntent.MyResultReceiver(new Handler()).setOnMyResultListener(new searchIntent.MyResultReceiver.OnMyResultListener(){
             @Override
             public void onReceiveResult(int resultCode, Bundle resultData){
-
-                String message=resultData.getString("search_request");
+                Log.i(this.getClass().getName(),"PUTEXTRA");
+                String message=resultData.getString("search_query");
                 if(message!=null){
                     Log.i(this.getClass().getName(),message);
+                    printTest(message);
                 }else{
                     Log.i(this.getClass().getName(),"It's null");
                 }
@@ -472,6 +520,16 @@ private String loadedData;
             }
         }));
         startService(intent);
+    }
+
+    public void printTest(String result){
+        gamesListAux=new ArrayList<>();
+        gamesListAux.addAll(gamesList);
+        gamesList.clear();
+        Log.i(this.getClass().getName(),result);
+        json_auxiliar=result;
+
+        data_to_Json(result);
     }
 
     @Override
@@ -489,11 +547,11 @@ private String loadedData;
     protected void onResume() {
         super.onResume();
         Log.i(this.getClass().getName(),"onResume");
-        if(auto_refresh){
-            Log.i(this.getClass().getName(),"Auto refresh working");
-            auto_refresh=false;
-
+        count=0;
+        if(gamesListAux!=null){
+            Log.i(this.getClass().getName(),"onResume"+gamesListAux.size());
         }
+        //setupGames(1);
 
 
     }

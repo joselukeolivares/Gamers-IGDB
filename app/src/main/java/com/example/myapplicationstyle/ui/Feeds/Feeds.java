@@ -60,6 +60,7 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
     String category_request="";
     static boolean refresh=false;
     private BottomNavigationView bottomNavigationView;
+    private String JsonAux;
 
 
 
@@ -102,7 +103,20 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
 
 
         setUp();
-        getData();
+        if(savedInstanceState!=null){
+            String recoveryData=savedInstanceState.getString("json_aux");
+            if(recoveryData!=null){
+                empty_message.setVisibility(View.INVISIBLE);
+                feedsJsonTo_FeedEntryList(recoveryData);
+
+            }else{
+                getData();
+            }
+
+        }else{
+            getData();
+
+        }
 
 
     }
@@ -141,6 +155,7 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
                     }else{
                         empty_message.setVisibility(View.VISIBLE);
                     }
+                    JsonAux=response.toString();
                     feedsJsonTo_FeedEntryList(response.toString());
                 }
 
@@ -206,6 +221,7 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString("json_aux",JsonAux);
 
     }
 
@@ -279,6 +295,9 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
                 searchView.setQuery("", false);
                 searchView.setIconified(true);
                 searchView.onActionViewCollapsed();
+                GoToGames(query);
+
+
 
 
 
@@ -297,9 +316,15 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
         return true;
     }
 
+    public void GoToGames(String query){
+        Intent intent=new Intent(this,games_host.class);
+        intent.putExtra("search_query",query);
+        startActivity(intent);
+    }
+
     public void searchVideoGame(String query){
         Intent intent=new Intent(this, games_host.class);
-        intent.putExtra("search_game",query);
+        intent.putExtra("search_query",query);
         startActivity(intent);
     }
 }
