@@ -81,7 +81,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         imgBar=(ImageView)findViewById(R.id.img_bar);
         Picasso.with(this).load(game_poster_url).into(imgBar);
 
-
+        setupSharedPreferences();
 
 
 
@@ -105,7 +105,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
                 return true;
             }
         });
-        setupSharedPreferences();
+
 
         Intent intent=getIntent();
         if(savedInstanceState!=null){
@@ -115,10 +115,12 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
         }else if(intent!=null){
             Log.i(this.getClass().getName(),"from intent");
-            if(intent.getStringExtra("search_query")!=null){
+            if(intent.getStringExtra("search_query")!=null && !intent.getStringExtra("search_query").isEmpty()){
                 search_request=intent.getStringExtra("search_query");
                 Log.i(this.getClass().getName(),"Changing search");
                 performUpdate(search_request);
+            }else{
+                getData();
             }
 
 
@@ -245,7 +247,7 @@ private String loadedData;
 
             @Override
             public void succesVolley(JSONArray response) {
-                //Log.i(this.getClass().getName(), response.toString());
+                Log.i(this.getClass().getName(), response.toString());
                 loadedData=response.toString();
                 data_to_Json(response.toString());
 
@@ -427,7 +429,7 @@ private String loadedData;
     public void setupSharedPreferences(){
         SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
 
-        platform_request=sharedPreferences.getString(getString(R.string.pref_platform_key),getString(R.string.pref_platform_label_ps4));
+        platform_request=sharedPreferences.getString(getString(R.string.pref_platform_key),getString(R.string.pref_platform_all));
         category_request=sharedPreferences.getString(getString(R.string.pref_news_category),getString(R.string.pref_news_label_all));
         desc            =sharedPreferences.getBoolean(getString(R.string.order_desc),false);
 
@@ -439,18 +441,20 @@ private String loadedData;
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
         if(key.equals(getString(R.string.pref_platform_key))){
-            String platform=sharedPreferences.getString(key,getResources().getString(R.string.pref_platform_all));
-
+             platform_request=sharedPreferences.getString(key,getResources().getString(R.string.pref_platform_all));
+            auto_refresh=true;
         }else if(key.equals(getString(R.string.pref_news_category))){
-            String category=sharedPreferences.getString(key,getResources().getString(R.string.pref_news_all));
-
+            category_request=sharedPreferences.getString(key,getResources().getString(R.string.pref_news_all));
+            auto_refresh=true;
         }else if(key.equals(getString(R.string.order_desc))){
             boolean order_desc=sharedPreferences.getBoolean(key,getResources().getBoolean(R.bool.pref_game_order));
 
             if(order_desc){
                 //Log.i(this.getClass().getName(),"desc: True");
+                desc=true;
             }else{
                 //Log.i(this.getClass().getName(),"desc: false");
+                desc=false;
             }
 
             auto_refresh=true;
@@ -553,6 +557,10 @@ private String loadedData;
         if(gamesListAux!=null){
             Log.i(this.getClass().getName(),"onResume"+gamesListAux.size());
         }
+        if(auto_refresh){
+            getData();
+            auto_refresh=false;
+        }
         //setupGames(1);
 
 
@@ -580,6 +588,7 @@ private String loadedData;
     protected void onRestart() {
         super.onRestart();
         Log.i(this.getClass().getName(),"onRestart");
+
 
 
     }

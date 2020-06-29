@@ -109,6 +109,7 @@ public class getJson extends View{
                 }
 
                 if(!platform.equals("9999")){
+
                     where_condition=where_condition.concat(" & platforms !=n & platforms = {"+platform+"}");
                 }
                 where_condition=where_condition.concat(";");
