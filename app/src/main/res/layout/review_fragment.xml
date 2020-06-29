@@ -12,7 +12,9 @@
         android:layout_margin="10dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></ImageView>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/CDesc_review_game_cover"
+        ></ImageView>
 
     <TextView
         android:id="@+id/game_name_review"
@@ -20,7 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="@+id/game_cover"
-        app:layout_constraintTop_toBottomOf="@+id/game_cover_review" />
+        app:layout_constraintTop_toBottomOf="@+id/game_cover_review"
+        android:contentDescription="@string/CDesc_review_game_Name"
+        />
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,5 +1,6 @@
 package com.example.myapplicationstyle.ui;
 
+import android.app.IntentService;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
@@ -91,9 +93,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
                     case R.id.games_bottom_option:
                         Goto_Games(false);
                         return true;
-                    case R.id.favorites_bottom_option:
-                        Goto_Games(true);
-                        return true;
+
                 }
                 return true;
             }
@@ -156,7 +156,10 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     public  void addGamesViewModel(List<GameEntry> gameEntries){
         Log.i(this.getClass().getName(),"Games in DB "+gameEntries.size());
         for(int i=0;i<gameEntries.size();i++){
-            gamesList.add(gameEntries.get(i));
+            GameEntry gameEntry=gameEntries.get(i);
+            gameEntry.setFavorite(true);
+            gamesList.add(gameEntry);
+
             Log.i(this.getClass().getName(),"Game from DB "+gameEntries.get(i).getId()+" "+gameEntries.get(i).getName());
         }
 
@@ -177,7 +180,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
     public void Goto_Games(boolean favorites){
 
         if(favorites){
-            //filterGames_favorites();
+
         }else{
             Toast toast=Toast.makeText(this,getString(R.string.you_areHere_games),Toast.LENGTH_LONG);
             toast.show();
@@ -202,7 +205,7 @@ private String loadedData;
                 loadedData=response.toString();
                 data_to_Json(response.toString());
 
-                setupGames(1);
+                //setupGames(1);
             }
         });
 
@@ -324,7 +327,7 @@ private String loadedData;
                      */
 
 
-                    //Log.i(this.getClass().getName(),"game cover_id: "+gameEntry.getCoverUrl());
+                    Log.i(this.getClass().getName(),"game cover_id: "+gameEntry.getCoverUrl());
 
                     gamesList.add(gameEntry);
 
@@ -332,7 +335,7 @@ private String loadedData;
 
                 }
 
-
+                    setupGames(1);
 
             }catch (JSONException e){
                 e.printStackTrace();
@@ -340,9 +343,15 @@ private String loadedData;
 
 
         }
+        emptyResult_text=(TextView)findViewById(R.id.empty_result_textView);
+        if(gamesList!=null && gamesList.isEmpty()){
+            emptyResult_text.setText(getString(R.string.empty_result));
+        }else{
+            emptyResult_text.setText("");
+        }
 
     }
-
+    TextView emptyResult_text;
 
     Adds adds=new Adds();
 
@@ -354,6 +363,7 @@ private String loadedData;
                     .replace(R.id.games_fragment,games_igdb)
                     .commit();
             Log.i(this.getClass().getName(),"Game list: "+gamesList.size());
+
             games_igdb.setGamesData(gamesList,this);
         }
 
@@ -439,9 +449,12 @@ private String loadedData;
     }
 
     public void performUpdate(String query){
-        Intent intent=new Intent(this,games_host.class);
+        Intent intent=new Intent(this,searchIntent.class);
+        intent.putExtra("platform_request",platform_request);
+        intent.putExtra("category_request",category_request);
+        intent.putExtra("desc",desc);
         intent.putExtra("search_query",query);
-        startActivity(intent);
+        startService(intent);
     }
 
     @Override
@@ -493,4 +506,35 @@ private String loadedData;
 
 
     }
+
+    class searchIntent extends IntentService {
+
+        public searchIntent() {
+            super("name");
+        }
+
+        @Override
+        protected void onHandleIntent(@Nullable Intent intent) {
+            String platform_request=intent.getStringExtra("platform_request");
+            String category_request=intent.getStringExtra("category_request");
+            boolean desc=intent.getBooleanExtra("desc",true);
+            String search_request=intent.getStringExtra("search_request");
+
+
+            getJson.getData(this,platform_request,category_request,desc,search_request, new MainActivity.VolleyCallBack() {
+
+
+                @Override
+                public void succesVolley(JSONArray response) {
+
+                    data_to_Json(response.toString());
+
+
+                }
+            });
+
+        }
+
+    }
+
 }

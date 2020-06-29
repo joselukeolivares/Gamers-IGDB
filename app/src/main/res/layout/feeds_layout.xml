@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/empty_result_textView_feed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_result"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/feeds_recycler_view"></TextView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/feeds_recycler_view"
         android:layout_width="match_parent"
@@ -20,6 +29,7 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@android:color/black"
         app:itemTextColor="@android:color/white"
+        android:contentDescription="@string/feeds_bottom_navigation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 

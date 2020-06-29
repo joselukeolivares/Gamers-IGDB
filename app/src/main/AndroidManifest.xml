@@ -27,6 +27,7 @@
         </receiver>
 
         <service android:name=".games_service"></service>
+        <service android:name=".ui.searchIntent"></service>
 
         <meta-data
             android:name="com.google.android.actions"
@@ -44,7 +45,7 @@
         <activity android:name=".ui.games_host" />
         <activity
             android:name=".ui.Activity_settings"
-            android:parentActivityName=".ui.games_host"
+
             android:theme="@style/AppTheme_with_AB">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -56,27 +57,27 @@
         </activity>
         <activity
             android:name=".ui.game_detail"
-            android:parentActivityName=".ui.games_host"
+
             android:theme="@style/AppTheme_with_AB"></activity>
         <activity
             android:name=".ui.screenshots.Screenshots"
-            android:parentActivityName=".ui.game_detail"
+
             android:theme="@style/AppTheme_with_AB"></activity>
         <activity
             android:name=".ui.videos.Videos"
-            android:parentActivityName=".ui.game_detail"
+
             android:theme="@style/AppTheme_with_AB"></activity>
         <activity
             android:name=".ui.reviews.Review"
-            android:parentActivityName=".ui.game_detail"
+
             android:theme="@style/AppTheme_with_AB"></activity>
         <activity
             android:name=".ui.reviews.Review_detail"
-            android:parentActivityName=".ui.game_detail"
+
             android:theme="@style/AppTheme_with_AB"></activity>
         <activity
             android:name=".ui.Feeds.Feeds"
-            android:parentActivityName=".ui.game_detail"
+
             android:theme="@style/AppTheme_with_AB"></activity>
     </application>
 

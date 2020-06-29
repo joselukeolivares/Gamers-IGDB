@@ -43,8 +43,12 @@ public class Game_summary_fragment extends Fragment {
     private  TextView want;
     private  TextView playing;
     private  TextView played;
+    boolean favorite=false;
+
 
     onClickFavBtn onClickFavBtnObj;
+
+
 
     public interface onClickFavBtn{
         void clickingFavoriteBtn();
@@ -76,6 +80,7 @@ public class Game_summary_fragment extends Fragment {
         played=(TextView)rootView.findViewById(R.id.played_value);
         summary=(TextView) rootView.findViewById(R.id.game_summary);
 
+
         favorite_floatingButton=(FloatingActionButton)rootView.findViewById(R.id.favorite_floatingButton);
 
         favorite_floatingButton.setOnClickListener(new View.OnClickListener() {
@@ -83,10 +88,13 @@ public class Game_summary_fragment extends Fragment {
             public void onClick(View v) {
                 Log.i(this.getClass().getName(),"Clicking FloatingButton");
                 onClickFavBtnObj.clickingFavoriteBtn();
+
+
             }
         });
 
         if(game!=null){
+
             build_UI();
         }
 
@@ -135,10 +143,14 @@ public class Game_summary_fragment extends Fragment {
         summary.setText(summary_value!=null?summary_value:summary_value);
 
 
+
+
     }
 
     public void setGameInfo(GameEntry game){
+
         this.game=game;
+
 
     }
 

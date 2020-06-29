@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
     private String game_name;
     private String game_cover;
     private String feedsList_jsonString;
+    TextView empty_message;
 
     //game reference
     private ImageView cover;
@@ -67,9 +69,9 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.feeds_layout);
         ActionBar actionBar=this.getSupportActionBar();
-
+        empty_message=(TextView)findViewById(R.id.empty_result_textView_feed);
         if(actionBar!=null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
+
             actionBar.setTitle(getString(R.string.app_name));
         }
 
@@ -92,9 +94,7 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
                     case R.id.games_bottom_option:
                         Goto_Games(false);
                         return true;
-                    case R.id.favorites_bottom_option:
-                        Goto_Games(true);
-                        return true;
+
                 }
                 return true;
             }
@@ -136,6 +136,11 @@ public class Feeds extends AppCompatActivity implements FeedAdapter.onClickFeedA
             @Override
             public void succesVolley(JSONArray response) {
                 if(!response.toString().isEmpty() && response!=null){
+                    if(response.length()>5){
+                        empty_message.setVisibility(View.INVISIBLE);
+                    }else{
+                        empty_message.setVisibility(View.VISIBLE);
+                    }
                     feedsJsonTo_FeedEntryList(response.toString());
                 }
 

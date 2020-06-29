@@ -13,13 +13,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/CDesc_review_game_cover"
+        />
     <TextView
         android:id="@+id/game_name_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/gameName_viewHolder"
+        android:contentDescription="@string/CDesc_review_game_Name"
         app:layout_constraintStart_toStartOf="@+id/cover_view_holder"
         app:layout_constraintTop_toBottomOf="@+id/cover_view_holder">
     </TextView>
+
+    <ImageView
+        android:id="@+id/fab_icon"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_favorite_black_18dp"
+        app:layout_constraintBottom_toTopOf="@+id/game_name_value"
+        app:layout_constraintEnd_toEndOf="@+id/cover_view_holder">
+
+    </ImageView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,6 +55,7 @@ public class Review extends AppCompatActivity implements SharedPreferences.OnSha
     private String game_cover;
     private JSONObject game_jsonObj;
     private String screenshotJsonArray;
+    private TextView empty_label;
 
 
     FragmentManager fragmentManager=getSupportFragmentManager();
@@ -106,11 +109,12 @@ public class Review extends AppCompatActivity implements SharedPreferences.OnSha
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.reviews);
+        empty_label=(TextView)findViewById(R.id.empty_result_textView_review);
 
         ActionBar actionBar=this.getSupportActionBar();
 
         if(actionBar!=null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            //actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(getString(R.string.app_name));
         }
 
@@ -142,6 +146,7 @@ public class Review extends AppCompatActivity implements SharedPreferences.OnSha
                 .commit();
 
         review_fragment.setData(game_idIGDB,game_name,game_cover,reviewsJsonArray_String);
+
     }
 
     public void getReviews(){
@@ -155,7 +160,17 @@ public class Review extends AppCompatActivity implements SharedPreferences.OnSha
 
                 //Log.i(this.getClass().getName(),response.toString());
                 reviewsJsonArray_String=response.toString();
-                admin_review_Fragment();
+                if(reviewsJsonArray_String!=null){
+                    if(!reviewsJsonArray_String.isEmpty() && reviewsJsonArray_String.length()>5){
+                        empty_label.setVisibility(View.INVISIBLE);
+
+                    }else{
+                        empty_label.setVisibility(View.VISIBLE);
+                    }
+
+                    admin_review_Fragment();
+                }
+
 
             }
         });

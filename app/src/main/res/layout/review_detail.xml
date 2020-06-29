@@ -19,6 +19,7 @@
             android:layout_height="150dp"
             android:layout_margin="10dp"
             android:scaleType="centerCrop"
+            android:contentDescription="@string/CDesc_review_game_cover"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"></ImageView>
 
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:contentDescription="@string/CDesc_review_game_Name"
             app:layout_constraintStart_toStartOf="@+id/game_cover"
             app:layout_constraintTop_toBottomOf="@+id/game_cover_review" />
 
@@ -44,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/CDesc_review_number"
                 android:text="TextView" />
 
             <TextView
@@ -53,6 +56,7 @@
                 android:layout_weight="1"
                 android:textAlignment="textEnd"
                 android:text="TextView"
+                android:contentDescription="@string/CDesc_review_date_value"
                 android:gravity="end" />
         </LinearLayout>
 
@@ -62,6 +66,7 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:layout_margin="10dp"
+            android:contentDescription="@string/CDesc_review_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
@@ -72,6 +77,7 @@
             android:layout_margin="10dp"
             android:text="@string/positive_points"
             android:textColor="@android:color/holo_green_dark"
+            android:contentDescription="@string/CDesc_review_positive"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/review_content_value" />
 
@@ -81,6 +87,7 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:layout_margin="10dp"
+            android:contentDescription="@string/CDesc_review_positive_value"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/review_positivePoint_label" />
 
@@ -92,6 +99,7 @@
             android:textColor="@android:color/holo_red_dark"
             android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/CDesc_review_negative"
             app:layout_constraintTop_toBottomOf="@+id/review_positivePoint_value" />
 
         <TextView
@@ -101,6 +109,7 @@
             android:text="TextView"
             android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/CDesc_review_negative_value"
             app:layout_constraintTop_toBottomOf="@+id/review_negativePoint_label" />
 
 

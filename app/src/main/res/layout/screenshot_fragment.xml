@@ -11,6 +11,7 @@
         android:layout_height="150dp"
         android:layout_margin="10dp"
         android:scaleType="centerCrop"
+        android:contentDescription="@string/CDesc_screenshot_cover"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
 
@@ -20,7 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="@+id/game_cover"
-        app:layout_constraintTop_toBottomOf="@+id/game_cover_screenshot" />
+        app:layout_constraintTop_toBottomOf="@+id/game_cover_screenshot"
+        android:contentDescription="@string/CDesc_screenshot_game_name"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/screnshot_recycler_view"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,7 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
     GameViewModel gameViewModel;
     boolean favorite=false;
     int game_id=0;
+    public ImageView fab_icon;
 
     FragmentManager fragmentManager=getSupportFragmentManager();
     Game_summary_fragment games_fragment=new Game_summary_fragment();
@@ -55,9 +57,10 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
         setContentView(R.layout.game_detail);
 
         ActionBar actionBar=this.getSupportActionBar();
+        fab_icon=(ImageView)findViewById(R.id.fab_icon_game_detail);
 
         if(actionBar!=null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
+           // actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(getString(R.string.app_name));
         }
 
@@ -76,9 +79,10 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
             if(intent.getIntExtra("game_idIGDB",0)!=0){
 
                 if(intent.getIntExtra("game_id",0)!=0){
-                    Log.i(this.getClass().getName(),"Game come as favorite");
+
                     game_id=intent.getIntExtra("game_id",0);
                     favorite=intent.getBooleanExtra("game_favorite",false);
+
                     findGame(game_id,true);
                     //admin_content_fragment();
                 }else
@@ -193,6 +197,11 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
 
     public void admin_content_fragment(){
         if(gameEntry!=null){
+            if(gameEntry.isFavorite()){
+                fab_icon.setVisibility(View.VISIBLE);
+            }else {
+                fab_icon.setVisibility(View.INVISIBLE);
+            }
             games_fragment.setGameInfo(gameEntry);
             //games_fragment.build_UI();
             fragmentManager.beginTransaction()
@@ -218,6 +227,13 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
 
                 String id = gameJsonObj.optString("id");
                 gameEntry.setId_IGDB(Integer.parseInt(id));
+                gameEntry.setFavorite(favorite);
+
+                if(gameEntry.isFavorite()){
+                    Log.i(this.getClass().getName(),"Game come as favorite");
+                }else{
+                    Log.i(this.getClass().getName(),"Game NOT come as favorite");
+                }
 
                 //name
                 String name = gameJsonObj.optString("name");
@@ -341,9 +357,11 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
 
         if(favorite){
             Log.i(this.getClass().getName(),"Game is marked like favorite. Preparing to delete from DB");
+            fab_icon.setVisibility(View.INVISIBLE);
+
         }else{
             Log.i(this.getClass().getName(),"Games is not Favorite");
-
+            fab_icon.setVisibility(View.VISIBLE);
             findGame(gameEntry.getId(),false);
 
 
@@ -399,7 +417,8 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
 
                    if(update_entity){
                        gameEntry=gameDB;
-                       Log.i(this.getClass().getName(),"Game updated");
+                       gameEntry.setFavorite(true);
+                       Log.i(this.getClass().getName(),"Game updated+ "+gameEntry.isFavorite());
                        admin_content_fragment();
                    }else{
                        //insert game in DB
@@ -421,6 +440,7 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
 
     public void gameFound(){
         Log.i(this.getClass().getName(),"Game found. Can be deleted");
+
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -430,13 +450,16 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
 
 
 
+
             }
         });
 
     }
 
     public void gameNotFound(){
+
         Log.i(this.getClass().getName(),"Game Not found. Can be inserted ");
+
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -446,6 +469,8 @@ public class game_detail extends AppCompatActivity  implements Game_summary_frag
                         favorite=true;
                         Log.i(this.getClass().getName(),"inserting game like favorite in DB "+id);
                         gameEntry.setId(id);
+                        gameEntry.setFavorite(true);
+
                         //gameEntry.setFavorite(true);
 
                     }

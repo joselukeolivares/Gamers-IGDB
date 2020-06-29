@@ -8,35 +8,42 @@
     <ImageView
         android:id="@+id/game_cover"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_margin="25dp"
+        android:contentDescription="@string/CDesc_game_info_cover"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/favorite_floatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/CDesc_game_info_fab_btn"
         android:src="@drawable/ic_favorite_black_18dp"
         app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/game_cover"
-        app:layout_constraintEnd_toEndOf="@+id/game_cover" />
+        app:layout_constraintEnd_toEndOf="@+id/game_cover"
+        app:layout_constraintTop_toBottomOf="@+id/game_cover" />
 
     <TextView
         android:id="@+id/game_name"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/CDesc_game_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_cover" />
+        app:layout_constraintTop_toBottomOf="@+id/favorite_floatingButton" />
 
     <TextView
         android:id="@+id/game_release"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:contentDescription="@string/CDesc_game_date_release"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_name" />
 
@@ -45,6 +52,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:contentDescription="@string/CDesc_game_companies"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_release" />
 
@@ -53,8 +61,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:contentDescription="@string/CDesc_game_member"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_cover"
+        app:layout_constraintTop_toBottomOf="@+id/favorite_floatingButton"
         tools:text="@string/member_count" />
 
     <TextView
@@ -62,6 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
+        android:contentDescription="@string/CDesc_game_member"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/member_count_label" />
 
@@ -70,6 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
+        android:contentDescription="@string/CDesc_game_member_rating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/member_count_value"
         tools:text="@string/critic_rating" />
@@ -79,6 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
+        android:contentDescription="@string/CDesc_game_member_value"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/critic_rating_label" />
 
@@ -95,12 +107,14 @@
             android:id="@+id/genre_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/CDesc_game_genres"
             android:text="@string/genre_label" />
 
         <TextView
             android:id="@+id/genre_value"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/CDesc_game_genres" />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -113,18 +127,21 @@
         android:layout_margin="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat">
 
         <TextView
             android:id="@+id/platforms_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/CDesc_game_platforms"
             android:text="@string/platform_label" />
 
         <TextView
             android:id="@+id/platforms_values"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/CDesc_game_platforms_values" />
 
     </LinearLayout>
 
@@ -133,6 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:contentDescription="@string/CDesc_game_summary"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <LinearLayout
@@ -158,12 +176,14 @@
                 android:id="@+id/want_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/ic_access_time_24px" />
+                android:background="@drawable/ic_access_time_24px"
+                android:contentDescription="@string/CDesc_game_want_icon" />
 
             <TextView
                 android:id="@+id/want_value"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/CDesc_game_want_value"
                 android:gravity="center_horizontal"
                 android:textAlignment="center" />
 
@@ -171,6 +191,7 @@
                 android:id="@+id/want_label"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/CDesc_game_want_label"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
                 tools:text="@string/want" />
@@ -184,6 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
             android:orientation="vertical"
+
             app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
             app:layout_constraintStart_toEndOf="@+id/linearLayout3"
             app:layout_constraintTop_toBottomOf="@+id/textView7">
@@ -192,12 +214,14 @@
                 android:id="@+id/playing_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/ic_games_24px" />
+                android:background="@drawable/ic_games_24px"
+                android:contentDescription="@string/CDesc_game_playing_icon" />
 
             <TextView
                 android:id="@+id/playing_value"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/CDesc_game_playing_value"
                 android:gravity="center_horizontal"
                 android:textAlignment="center" />
 
@@ -205,6 +229,7 @@
                 android:id="@+id/playing_label"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/CDesc_game_playing_label"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
                 tools:text="@string/playing" />
@@ -225,12 +250,14 @@
                 android:id="@+id/played_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/ic_check_circle_24px" />
+                android:background="@drawable/ic_check_circle_24px"
+                android:contentDescription="@string/CDesc_game_played_icon" />
 
             <TextView
                 android:id="@+id/played_value"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/CDesc_game_played_value"
                 android:gravity="center_horizontal"
                 android:textAlignment="center" />
 
@@ -238,6 +265,7 @@
                 android:id="@+id/played_label"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/CDesc_game_played_label"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
                 tools:text="@string/played" />

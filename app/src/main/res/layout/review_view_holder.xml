@@ -29,7 +29,9 @@
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/CDesc_review_critic_value"
+                />
 
             <TextView
                 android:id="@+id/review_title_value"
@@ -41,7 +43,9 @@
                 android:text="@string/critic_dummy_value"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/review_critic_value"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/CDesc_review_title"
+                >
 
             </TextView>
 
@@ -53,7 +57,7 @@
                 android:background="@android:color/white"
                 android:gravity="center"
                 android:text="@string/date_dummy_value"
-
+                android:contentDescription="@string/CDesc_review_createAt"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="@+id/review_critic_value"
                 app:layout_constraintEnd_toEndOf="parent"

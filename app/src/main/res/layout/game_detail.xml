@@ -18,6 +18,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <ImageView
+                android:src="@drawable/ic_favorite_red_18dp"
+                android:id="@+id/fab_icon_game_detail"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/game_cover"
+                app:layout_constraintEnd_toEndOf="@+id/game_cover"
+                app:layout_constraintTop_toTopOf="@+id/game_cover" />
         <FrameLayout
             android:id="@+id/game_content"
             android:layout_width="match_parent"
@@ -37,6 +46,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/videos_label"
+                android:contentDescription="@string/CDesc_game_detail_videos"
 
                 />
 
@@ -44,12 +54,14 @@
                 android:id="@+id/screenshot_btn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/CDesc_game_detail_screenshots"
                 android:text="@string/screenshot_label" />
 
             <Button
                 android:id="@+id/reviews_btn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/CDesc_game_detail_reviews"
                 android:text="@string/reviews_label" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -66,6 +78,7 @@
             app:itemBackground="@color/colorPrimary"
             app:itemIconTint="@android:color/black"
             app:itemTextColor="@android:color/white"
+            android:contentDescription="@string/CDesc_game_BottomNavigation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_navigation_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>

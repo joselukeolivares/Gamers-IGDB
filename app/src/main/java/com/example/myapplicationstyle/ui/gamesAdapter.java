@@ -54,6 +54,11 @@ public class gamesAdapter extends RecyclerView.Adapter<gamesAdapter.VH>{
 
         Picasso.with(context).load(uri).into(holder.poster);
         holder.game_name.setText(gameEntry.getName());
+        if(gameEntry.isFavorite()){
+            holder.favorite_icon.setImageResource(R.drawable.ic_favorite_red_18dp);
+        }else{
+            holder.favorite_icon.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -69,10 +74,12 @@ public class gamesAdapter extends RecyclerView.Adapter<gamesAdapter.VH>{
     public class VH extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView poster;
         TextView game_name;
+        ImageView favorite_icon;
         public VH(View itemView){
             super(itemView);
             poster=itemView.findViewById(R.id.cover_view_holder);
             game_name=itemView.findViewById(R.id.game_name_value);
+            favorite_icon=itemView.findViewById(R.id.fab_icon);
             itemView.setOnClickListener(this);
 
         }

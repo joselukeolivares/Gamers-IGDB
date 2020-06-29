@@ -7,14 +7,28 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/message_to_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/Wellcome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="25dp"
+        android:contentDescription="@string/Wellcome_message"
         style="@style/my_style"
         />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="25dp"
+        android:id="@+id/retry_btn"
+        android:text="@string/try_again"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message_to_user" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
