@@ -52,7 +52,8 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
 
     private Toolbar mToolbar;
     private  ImageView imgBar;
-    private String game_poster_url="https://images.igdb.com/igdb/image/upload/t_cover_big/co20uw.jpg";
+    private String game_poster_url;
+
     private ArrayList<GameEntry> gamesList=new ArrayList<>();
     private ArrayList<GameEntry> gamesListAux;
     private static boolean auto_refresh=false;
@@ -75,6 +76,7 @@ public class games_host  extends AppCompatActivity implements SharedPreferences.
         Log.i(this.getClass().getName(),"onCreate");
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.games_host);
+        game_poster_url=getString(R.string.uriCover)+"co20uw"+getString(R.string.jpg);
         emptyResult_text=(TextView)findViewById(R.id.empty_result_textView);
         imgBar=(ImageView)findViewById(R.id.img_bar);
         Picasso.with(this).load(game_poster_url).into(imgBar);
